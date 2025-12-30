@@ -2936,12 +2936,45 @@ PhTerminateWindow(
     );
 
 PHLIBAPI
+NTSTATUS
+NTAPI
+PhOpenWindowProcess(
+    _Out_ PHANDLE ProcessHandle,
+    _In_ ACCESS_MASK DesiredAccess,
+    _In_ HWND WindowHandle
+    );
+
+PHLIBAPI
 ULONG_PTR
 NTAPI
 PhUserQueryWindow(
     _In_ HWND WindowHandle,
     _In_ WINDOWINFOCLASS WindowInfo
     );
+
+FORCEINLINE
+ULONG
+PhQueryWindowRealProcess(
+    _In_ HWND WindowHandle
+    )
+{
+    return (ULONG)PhUserQueryWindow(
+        WindowHandle,
+        WindowRealProcess
+        );
+}
+
+FORCEINLINE
+BOOLEAN
+PhWindowIsHung(
+    _In_ HWND WindowHandle
+    )
+{
+    return (BOOLEAN)(ULONG_PTR)PhUserQueryWindow(
+        WindowHandle,
+        WindowIsHung
+        );
+}
 
 #ifndef DBT_DEVICEARRIVAL
 #define DBT_DEVICEARRIVAL        0x8000  // system detected a new device
