@@ -39,6 +39,10 @@ PH_STARTUP_PARAMETERS PhStartupParameters = { .UpdateChannel = PhInvalidChannel 
 PH_PROVIDER_THREAD PhPrimaryProviderThread;
 PH_PROVIDER_THREAD PhSecondaryProviderThread;
 PH_PROVIDER_THREAD PhTertiaryProviderThread;
+RTL_ATOM PhTreeWindowAtom = RTL_ATOM_INVALID_ATOM;
+RTL_ATOM PhGraphWindowAtom = RTL_ATOM_INVALID_ATOM;
+RTL_ATOM PhHexEditWindowAtom = RTL_ATOM_INVALID_ATOM;
+RTL_ATOM PhColorBoxWindowAtom = RTL_ATOM_INVALID_ATOM;
 static PPH_LIST DialogList = NULL;
 static PPH_LIST FilterList = NULL;
 static PH_AUTO_POOL BaseAutoPool;
@@ -61,6 +65,8 @@ INT WINAPI wWinMain(
         return 1;
     if (!NT_SUCCESS(PhInitializeExceptionPolicy()))
         return 1;
+    if (!NT_SUCCESS(PhInitializeExecutionPolicy()))
+        return 1;
     if (!NT_SUCCESS(PhInitializeNamespacePolicy()))
         return 1;
     if (!NT_SUCCESS(PhInitializeComPolicy()))
@@ -77,6 +83,11 @@ INT WINAPI wWinMain(
     PhGuiSupportInitialization();
 
     PhInitializeAppSettings();
+
+    if (PhStartupParameters.Debug)
+    {
+        PhShowDebugConsole();
+    }
 
     PhInitializePreviousInstance();
 
@@ -732,10 +743,10 @@ VOID PhInitializeCommonControls(
 
     InitCommonControlsEx(&icex);
 
-    PhTreeNewInitialization();
-    PhGraphControlInitialization();
-    PhHexEditInitialization();
-    PhColorBoxInitialization();
+    PhTreeWindowAtom = PhTreeNewInitialization();
+    PhGraphWindowAtom = PhGraphControlInitialization();
+    PhHexEditWindowAtom = PhHexEditInitialization();
+    PhColorBoxWindowAtom = PhColorBoxInitialization();
 }
 
 /**
@@ -1217,12 +1228,41 @@ NTSTATUS PhInitializeComPolicy(
 }
 
 /**
+ * Initializes the execution policy for System Informer.
+ *
+ * This function checks if the Shift key is held down during startup. If so, it attempts
+ * to launch Task Manager (`taskmgr.exe`) instead of System Informer.
+ * This provides a quick way for users to access Task Manager if needed, for example,
+ * if System Informer is set as the default Task Manager replacement and the user
+ * wants to access the original Task Manager without changing settings.
+ * \return NTSTATUS Successful or errant status.
+ */
+NTSTATUS PhInitializeExecutionPolicy(
+    VOID
+    )
+{
+    // Note: GetAsyncKeyState queries the global keyboard bitmask without kernel transitions, blocking,
+    // handles, events or messages etc... The bitmask is also independent of any message loop or window.
+    // We can call it extremely early but only the high bit (0x8000) of the key state is valid without a message loop.
+
+    if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
+    {
+        if (NT_SUCCESS(PhShellExecuteEx(NULL, L"taskmgr.exe", NULL, NULL, SW_SHOW, 0, 0, NULL)))
+        {
+            PhExitApplication(STATUS_SUCCESS);
+        }
+    }
+
+    return STATUS_SUCCESS;
+}
+
+/**
  * Initializes the mitigation policies for the current process.
  *
  * This function configures process-level mitigations to prevent crashes by third party software. *
  * The function uses the Native API to set the mitigation policy. If the operating system does not
  * support the required mitigation policies, the function performs no action and returns success.
- * \return STATUS_SUCCESS on success, or an appropriate NTSTATUS error code on failure.
+ * \return NTSTATUS Successful or errant status.
  */
 NTSTATUS PhInitializeMitigationPolicy(
     VOID
@@ -1238,10 +1278,10 @@ NTSTATUS PhInitializeMitigationPolicy(
         //policyInfo.DynamicCodePolicy.ProhibitDynamicCode = TRUE;
         //NtSetInformationProcess(NtCurrentProcess(), ProcessMitigationPolicy, &policyInfo, sizeof(PROCESS_MITIGATION_POLICY_INFORMATION));
 
-        //policyInfo.Policy = ProcessExtensionPointDisablePolicy;
-        //policyInfo.ExtensionPointDisablePolicy.Flags = 0;
-        //policyInfo.ExtensionPointDisablePolicy.DisableExtensionPoints = TRUE;
-        //NtSetInformationProcess(NtCurrentProcess(), ProcessMitigationPolicy, &policyInfo, sizeof(PROCESS_MITIGATION_POLICY_INFORMATION));
+        policyInfo.Policy = ProcessExtensionPointDisablePolicy;
+        policyInfo.ExtensionPointDisablePolicy.Flags = 0;
+        policyInfo.ExtensionPointDisablePolicy.DisableExtensionPoints = TRUE;
+        NtSetInformationProcess(NtCurrentProcess(), ProcessMitigationPolicy, &policyInfo, sizeof(PROCESS_MITIGATION_POLICY_INFORMATION));
 
         policyInfo.Policy = ProcessSignaturePolicy;
         policyInfo.SignaturePolicy.Flags = 0;
