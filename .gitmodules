@@ -1,0 +1,3 @@
+[submodule ".python.patch"]
+	path = .python.patch
+	url = https://gitlab.com/anonymous9075331734/systeminformer-chinese
