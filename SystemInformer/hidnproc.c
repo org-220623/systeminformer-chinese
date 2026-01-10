@@ -124,7 +124,7 @@ INT_PTR CALLBACK PhpZombieProcessesDlgProc(
 
             PhSetListViewStyle(lvHandle, TRUE, TRUE);
             PhSetControlTheme(lvHandle, L"explorer");
-            PhAddListViewColumn(lvHandle, 0, 0, 0, LVCFMT_LEFT, 320, L"Process");
+            PhAddListViewColumn(lvHandle, 0, 0, 0, LVCFMT_LEFT, 320, L"进程");
             PhAddListViewColumn(lvHandle, 1, 1, 1, LVCFMT_LEFT, 60, L"PID");
 
             PhSetExtendedListView(lvHandle);
@@ -133,13 +133,13 @@ INT_PTR CALLBACK PhpZombieProcessesDlgProc(
             ExtendedListView_AddFallbackColumn(lvHandle, 1);
             ExtendedListView_SetItemColorFunction(lvHandle, PhpZombieProcessesColorFunction);
 
-            ComboBox_AddString(methodHandle, L"Brute force");
-            ComboBox_AddString(methodHandle, L"CSR handles");
-            ComboBox_AddString(methodHandle, L"ETW handles");
-            ComboBox_AddString(methodHandle, L"Process handles");
-            ComboBox_AddString(methodHandle, L"Registry handles");
-            ComboBox_AddString(methodHandle, L"Ntdll handles");
-            PhSelectComboBoxString(methodHandle, L"Process handles", FALSE);
+            ComboBox_AddString(methodHandle, L"暴力破解");
+            ComboBox_AddString(methodHandle, L"CSR 句柄");
+            ComboBox_AddString(methodHandle, L"ETW 句柄");
+            ComboBox_AddString(methodHandle, L"进程句柄");
+            ComboBox_AddString(methodHandle, L"注册表句柄");
+            ComboBox_AddString(methodHandle, L"NTDLL 句柄");
+            PhSelectComboBoxString(methodHandle, L"进程句柄", FALSE);
 
             MinimumSize.left = 0;
             MinimumSize.top = 0;
@@ -201,17 +201,17 @@ INT_PTR CALLBACK PhpZombieProcessesDlgProc(
 
                     ProcessesList = PhCreateList(40);
 
-                    if (PhEqualString2(method, L"Brute force", TRUE))
+                    if (PhEqualString2(method, L"暴力破解", TRUE))
                         ProcessesMethod = BruteForceScanMethod;
-                    else if (PhEqualString2(method, L"CSR handles", TRUE))
+                    else if (PhEqualString2(method, L"CSR 句柄", TRUE))
                         ProcessesMethod = CsrHandlesScanMethod;
-                    else if (PhEqualString2(method, L"Process handles", TRUE))
+                    else if (PhEqualString2(method, L"进程句柄", TRUE))
                         ProcessesMethod = ProcessHandleScanMethod;
-                    else if (PhEqualString2(method, L"Registry handles", TRUE))
+                    else if (PhEqualString2(method, L"注册表句柄", TRUE))
                         ProcessesMethod = RegistryScanMethod;
-                    else if (PhEqualString2(method, L"ETW handles", TRUE))
+                    else if (PhEqualString2(method, L"ETW 句柄", TRUE))
                         ProcessesMethod = EtwGuidScanMethod;
-                    else if (PhEqualString2(method, L"Ntdll handles", TRUE))
+                    else if (PhEqualString2(method, L"NTDLL 句柄", TRUE))
                         ProcessesMethod = NtdllScanMethod;
 
                     NumberOfZombieProcesses = 0;
@@ -230,14 +230,14 @@ INT_PTR CALLBACK PhpZombieProcessesDlgProc(
                     if (NT_SUCCESS(status))
                     {
                         PhSetDialogItemText(hwndDlg, IDC_DESCRIPTION,
-                            PhaFormatString(L"%u zombie process(es), %u terminated process(es).",
+                            PhaFormatString(L"%u 个僵尸进程, %u 个已终止进程。",
                             NumberOfZombieProcesses, NumberOfTerminatedProcesses)->Buffer
                             );
                         InvalidateRect(GetDlgItem(hwndDlg, IDC_DESCRIPTION), NULL, TRUE);
                     }
                     else
                     {
-                        PhShowStatus(hwndDlg, L"Unable to perform the scan", status, 0);
+                        PhShowStatus(hwndDlg, L"无法执行扫描", status, 0);
                     }
                 }
                 break;
@@ -254,10 +254,9 @@ INT_PTR CALLBACK PhpZombieProcessesDlgProc(
                         if (!PhGetIntegerSetting(L"EnableWarnings") ||
                             PhShowConfirmMessage(
                             hwndDlg,
-                            L"terminate",
-                            L"the selected process(es)",
-                            L"Terminating a Zombie process may cause the system to become unstable "
-                            L"or crash.",
+                            L"结束",
+                            L"已选中进程",
+                            L"终止僵尸进程可能会导致系统不稳定或崩溃。",
                             TRUE
                             ))
                         {
@@ -296,7 +295,7 @@ INT_PTR CALLBACK PhpZombieProcessesDlgProc(
                                 }
                                 else
                                 {
-                                    PhShowStatus(hwndDlg, L"Unable to terminate the process", status, 0);
+                                    PhShowStatus(hwndDlg, L"无法结束进程", status, 0);
                                 }
                             }
 
@@ -318,15 +317,15 @@ INT_PTR CALLBACK PhpZombieProcessesDlgProc(
                 {
                     static PH_FILETYPE_FILTER filters[] =
                     {
-                        { L"Text files (*.txt)", L"*.txt" },
-                        { L"All files (*.*)", L"*.*" }
+                        { L"文本文档 (*.txt)", L"*.txt" },
+                        { L"所有文件 (*.*)", L"*.*" }
                     };
                     PVOID fileDialog;
 
                     fileDialog = PhCreateSaveFileDialog();
 
                     PhSetFileDialogFilter(fileDialog, filters, sizeof(filters) / sizeof(PH_FILETYPE_FILTER));
-                    PhSetFileDialogFileName(fileDialog, L"Zombie Processes.txt");
+                    PhSetFileDialogFileName(fileDialog, L"僵尸进程.txt");
 
                     if (PhShowFileDialog(hwndDlg, fileDialog))
                     {
@@ -347,12 +346,12 @@ INT_PTR CALLBACK PhpZombieProcessesDlgProc(
                         {
                             PhWriteStringAsUtf8FileStream(fileStream, (PPH_STRINGREF)&PhUnicodeByteOrderMark);
                             PhWritePhTextHeader(fileStream);
-                            PhWriteStringAsUtf8FileStream2(fileStream, L"Method: ");
+                            PhWriteStringAsUtf8FileStream2(fileStream, L"方法: ");
                             PhWriteStringAsUtf8FileStream2(fileStream,
-                                ProcessesMethod == BruteForceScanMethod ? L"Brute Force\r\n" : L"CSR Handles\r\n");
+                                ProcessesMethod == BruteForceScanMethod ? L"暴力破解\r\n" : L"CSR 句柄\r\n");
                             PhWriteStringFormatAsUtf8FileStream(
                                 fileStream,
-                                L"Zombie: %u\r\nTerminated: %u\r\n\r\n",
+                                L"僵尸进程: %u\r\n已结束进程: %u\r\n\r\n",
                                 NumberOfZombieProcesses,
                                 NumberOfTerminatedProcesses
                                 );
@@ -366,9 +365,9 @@ INT_PTR CALLBACK PhpZombieProcessesDlgProc(
                                     PPH_ZOMBIE_PROCESS_ENTRY entry = ProcessesList->Items[i];
 
                                     if (entry->Type == ZombieProcess)
-                                        PhWriteStringAsUtf8FileStream2(fileStream, L"[Zombie] ");
+                                        PhWriteStringAsUtf8FileStream2(fileStream, L"[僵尸进程] ");
                                     else if (entry->Type == TerminatedProcess)
-                                        PhWriteStringAsUtf8FileStream2(fileStream, L"[Terminated] ");
+                                        PhWriteStringAsUtf8FileStream2(fileStream, L"[已终止] ");
                                     else if (entry->Type != NormalProcess)
                                         continue;
 
@@ -385,7 +384,7 @@ INT_PTR CALLBACK PhpZombieProcessesDlgProc(
                         }
 
                         if (!NT_SUCCESS(status))
-                            PhShowStatus(hwndDlg, L"Unable to create the file", status, 0);
+                            PhShowStatus(hwndDlg, L"无法创建文件", status, 0);
                     }
 
                     PhFreeFileDialog(fileDialog);
@@ -432,7 +431,7 @@ INT_PTR CALLBACK PhpZombieProcessesDlgProc(
                             }
                             else
                             {
-                                PhShowError2(hwndDlg, L"Unable to create a process structure for the selected process.", L"%s", L"");
+                                PhShowError2(hwndDlg, L"无法为所选进程创建进程结构。", L"%s", L"");
                             }
                         }
                     }
@@ -474,7 +473,7 @@ INT_PTR CALLBACK PhpZombieProcessesDlgProc(
                 if (numberOfItems != 0)
                 {
                     menu = PhCreateEMenu();
-                    PhInsertEMenuItem(menu, PhCreateEMenuItem(0, IDC_COPY, L"&Copy", NULL, NULL), ULONG_MAX);
+                    PhInsertEMenuItem(menu, PhCreateEMenuItem(0, IDC_COPY, L"复制(&C)", NULL, NULL), ULONG_MAX);
                     PhInsertCopyListViewEMenuItem(menu, IDC_COPY, PhZombieProcessesListViewHandle);
 
                     item = PhShowEMenu(
@@ -577,7 +576,7 @@ BOOLEAN NTAPI PhpZombieProcessesCallback(
     lvItemIndex = PhAddListViewItem(
         PhZombieProcessesListViewHandle,
         MAXINT,
-        PhGetStringOrDefault(PH_AUTO(PhGetFileName(entry->FileName)), L"(unknown)"),
+        PhGetStringOrDefault(PH_AUTO(PhGetFileName(entry->FileName)), L"(未知)"),
         entry
         );
     PhPrintUInt32(pidString, HandleToUlong(entry->ProcessId));

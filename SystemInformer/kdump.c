@@ -142,7 +142,7 @@ HRESULT CALLBACK PhpLiveDumpProgressDialogCallbackProc(
 
                 if (fileSize.QuadPart)
                 {
-                    PhInitFormatS(&format[0], L"Size: ");
+                    PhInitFormatS(&format[0], L"大小: ");
                     PhInitFormatSize(&format[1], fileSize.QuadPart);
 
                     if (PhFormatToBuffer(format, RTL_NUMBER_OF(format), string, sizeof(string), NULL))
@@ -152,7 +152,7 @@ HRESULT CALLBACK PhpLiveDumpProgressDialogCallbackProc(
                 }
                 else
                 {
-                    PhInitFormatS(&format[0], L"Initializing...");
+                    PhInitFormatS(&format[0], L"初始化中...");
 
                     if (PhFormatToBuffer(format, 1, string, sizeof(string), NULL))
                     {
@@ -195,7 +195,7 @@ HRESULT CALLBACK PhpLiveDumpProgressDialogCallbackProc(
                     config.pfCallback = PhpLiveDumpPageCallbackProc;
                     config.lpCallbackData = (LONG_PTR)context;
                     config.pszWindowTitle = PhApplicationName;
-                    config.pszMainInstruction = L"Live kernel dump has been created.";
+                    config.pszMainInstruction = L"已创建活动内核转储。";
                     config.pszContent = PhGetString(context->FileName);
                 }
                 else
@@ -206,7 +206,7 @@ HRESULT CALLBACK PhpLiveDumpProgressDialogCallbackProc(
                     config.pfCallback = PhpLiveDumpPageCallbackProc;
                     config.lpCallbackData = (LONG_PTR)context;
                     config.pszWindowTitle = PhApplicationName;
-                    config.pszMainInstruction = L"Unable to save the live kernel dump.";
+                    config.pszMainInstruction = L"无法保存活动内核转储。";
 
                     statusMessage = PhGetStatusMessage(context->LastStatus, 0);
                     config.pszContent = PhGetString(statusMessage);
@@ -254,7 +254,7 @@ NTSTATUS PhpLiveDumpTaskDialogThread(
 
     if (!NT_SUCCESS(status))
     {
-        PhShowStatus(NULL, L"Unable to save the live kernel dump.", status, 0);
+        PhShowStatus(NULL, L"无法保存活动内核转储。", status, 0);
         return status;
     }
 
@@ -266,7 +266,7 @@ NTSTATUS PhpLiveDumpTaskDialogThread(
     config.pfCallback = PhpLiveDumpProgressDialogCallbackProc;
     config.lpCallbackData = (LONG_PTR)context;
     config.pszWindowTitle = PhApplicationName;
-    config.pszMainInstruction = L"Processing live kernel dump...";
+    config.pszMainInstruction = L"正在处理活动内核转储...";
     config.pszContent = L" ";
     config.cxWidth = 200;
 
@@ -288,8 +288,8 @@ PPH_STRING PhpLiveDumpFileDialogFileName(
 {
     static PH_FILETYPE_FILTER filters[] =
     {
-        { L"Dump files (*.dmp)", L"*.dmp" },
-        { L"All files (*.*)", L"*.*" }
+        { L"转储文件 (*.dmp)", L"*.dmp" },
+        { L"所有文件 (*.*)", L"*.*" }
     };
     PPH_STRING fileName = NULL;
     PVOID fileDialog;
@@ -305,7 +305,7 @@ PPH_STRING PhpLiveDumpFileDialogFileName(
     timeString = PH_AUTO_T(PH_STRING, PhFormatTime(&systemTime, L"HH-mm-ss"));
     suggestedFileName = PH_AUTO_T(PH_STRING, PhFormatString(
         L"%s_%s_%s.dmp",
-        L"kerneldump",
+        L"内核转储",
         PhGetString(dateString),
         PhGetString(timeString)
         ));
@@ -388,7 +388,7 @@ INT_PTR CALLBACK PhpLiveDumpDlgProc(
 
                     if (!PhGetOwnTokenAttributes().Elevated)
                     {
-                        PhShowStatus(hwndDlg, L"Unable to create live kernel dump.", 0, ERROR_ELEVATION_REQUIRED);
+                        PhShowStatus(hwndDlg, L"无法创建活动内核转储", 0, ERROR_ELEVATION_REQUIRED);
                         break;
                     }
 

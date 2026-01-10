@@ -37,24 +37,24 @@ VOID PhInsertHandleObjectPropertiesEMenuItems(
         return;
 
     if (PhEqualString2(Info->TypeName, L"File", TRUE) || PhEqualString2(Info->TypeName, L"DLL", TRUE) ||
-        PhEqualString2(Info->TypeName, L"Mapped file", TRUE) || PhEqualString2(Info->TypeName, L"Mapped image", TRUE))
+        PhEqualString2(Info->TypeName, L"映射文件", TRUE) || PhEqualString2(Info->TypeName, L"映射映像", TRUE))
     {
         if (PhEqualString2(Info->TypeName, L"File", TRUE))
-            PhInsertEMenuItem(parentItem, PhCreateEMenuItem(0, ID_HANDLE_OBJECTPROPERTIES2, L"File propert&ies", NULL, NULL), indexInParent);
+            PhInsertEMenuItem(parentItem, PhCreateEMenuItem(0, ID_HANDLE_OBJECTPROPERTIES2, L"文件属性(&I)", NULL, NULL), indexInParent);
 
-        PhInsertEMenuItem(parentItem, PhCreateEMenuItem(0, ID_HANDLE_OBJECTPROPERTIES1, PhaAppendCtrlEnter(L"Open &file location", EnableShortcut), NULL, NULL), indexInParent);
+        PhInsertEMenuItem(parentItem, PhCreateEMenuItem(0, ID_HANDLE_OBJECTPROPERTIES1, PhaAppendCtrlEnter(L"打开文件所在位置(&F)", EnableShortcut), NULL, NULL), indexInParent);
     }
     else if (PhEqualString2(Info->TypeName, L"Key", TRUE))
     {
-        PhInsertEMenuItem(parentItem, PhCreateEMenuItem(0, ID_HANDLE_OBJECTPROPERTIES1, PhaAppendCtrlEnter(L"Open &key", EnableShortcut), NULL, NULL), indexInParent);
+        PhInsertEMenuItem(parentItem, PhCreateEMenuItem(0, ID_HANDLE_OBJECTPROPERTIES1, PhaAppendCtrlEnter(L"打开键(&K)", EnableShortcut), NULL, NULL), indexInParent);
     }
     else if (PhEqualString2(Info->TypeName, L"Process", TRUE))
     {
-        PhInsertEMenuItem(parentItem, PhCreateEMenuItem(0, ID_HANDLE_OBJECTPROPERTIES1, PhaAppendCtrlEnter(L"Process propert&ies", EnableShortcut), NULL, NULL), indexInParent);
+        PhInsertEMenuItem(parentItem, PhCreateEMenuItem(0, ID_HANDLE_OBJECTPROPERTIES1, PhaAppendCtrlEnter(L"进程属性(&I)", EnableShortcut), NULL, NULL), indexInParent);
     }
     else if (PhEqualString2(Info->TypeName, L"Section", TRUE))
     {
-        PhInsertEMenuItem(parentItem, PhCreateEMenuItem(0, ID_HANDLE_OBJECTPROPERTIES1, PhaAppendCtrlEnter(L"Read/Write &memory", EnableShortcut), NULL, NULL), indexInParent);
+        PhInsertEMenuItem(parentItem, PhCreateEMenuItem(0, ID_HANDLE_OBJECTPROPERTIES1, PhaAppendCtrlEnter(L"读取/写入内存", EnableShortcut), NULL, NULL), indexInParent);
     }
     else if (PhEqualString2(Info->TypeName, L"Thread", TRUE))
     {
@@ -110,7 +110,7 @@ VOID PhShowHandleObjectProperties1(
         return;
 
     if (PhEqualString2(Info->TypeName, L"File", TRUE) || PhEqualString2(Info->TypeName, L"DLL", TRUE) ||
-        PhEqualString2(Info->TypeName, L"Mapped file", TRUE) || PhEqualString2(Info->TypeName, L"Mapped image", TRUE))
+        PhEqualString2(Info->TypeName, L"映射文件", TRUE) || PhEqualString2(Info->TypeName, L"映射映像", TRUE))
     {
         if (Info->BestObjectName)
         {
@@ -119,18 +119,18 @@ VOID PhShowHandleObjectProperties1(
                 L"FileBrowseExecutable",
                 Info->BestObjectName->Buffer,
                 FALSE,
-                L"Make sure the Explorer executable file is present."
+                L"请确保资源管理器可执行文件存在。"
                 );
         }
         else
-            PhShowError2(hWnd, L"Unable to open the file location.", L"%s", L"The object is unnamed.");
+            PhShowError2(hWnd, L"无法打开文件所在位置。", L"%s", L"对象未命名。");
     }
     else if (PhEqualString2(Info->TypeName, L"Key", TRUE))
     {
         if (Info->BestObjectName)
             PhShellOpenKey2(hWnd, Info->BestObjectName);
         else
-            PhShowError2(hWnd, L"Unable to open key.", L"%s", L"The object is unnamed.");
+            PhShowError2(hWnd, L"无法打开键。", L"%s", L"对象未命名。");
     }
     else if (PhEqualString2(Info->TypeName, L"Process", TRUE))
     {
@@ -215,7 +215,7 @@ VOID PhShowHandleObjectProperties1(
             }
             else
             {
-                PhShowError2(hWnd, L"Unable to show the process properties.", L"%s", L"The process does not exist.");
+                PhShowError2(hWnd, L"无法显示进程属性。", L"%s", L"进程不存在。");
             }
         }
     }
@@ -292,7 +292,7 @@ VOID PhShowHandleObjectProperties1(
                     PPH_SHOW_MEMORY_EDITOR showMemoryEditor = PhAllocate(sizeof(PH_SHOW_MEMORY_EDITOR));
 
                     if (tooBig)
-                        PhShowWarning2(hWnd, L"The section size is greater than 32 MB. Only the first 32 MB will be available.", L"%s", L"");
+                        PhShowWarning2(hWnd, L"该节区大小超过 32 MB，仅可用前 32 MB。", L"%s", L"");
 
                     memset(showMemoryEditor, 0, sizeof(PH_SHOW_MEMORY_EDITOR));
                     showMemoryEditor->ProcessId = NtCurrentProcessId();
@@ -300,13 +300,13 @@ VOID PhShowHandleObjectProperties1(
                     showMemoryEditor->RegionSize = viewSize;
                     showMemoryEditor->SelectOffset = ULONG_MAX;
                     showMemoryEditor->SelectLength = 0;
-                    showMemoryEditor->Title = sectionName ? PhConcatStrings2(L"Section - ", sectionName->Buffer) : PhCreateString(L"Section");
+                    showMemoryEditor->Title = sectionName ? PhConcatStrings2(L"节区 - ", sectionName->Buffer) : PhCreateString(L"节区");
                     showMemoryEditor->Flags = PH_MEMORY_EDITOR_UNMAP_VIEW_OF_SECTION;
                     SystemInformer_ShowMemoryEditor(showMemoryEditor);
                 }
                 else
                 {
-                    PhShowStatus(hWnd, L"Unable to map a view of the section.", status, 0);
+                    PhShowStatus(hWnd, L"无法映射节区视图。", status, 0);
                 }
             }
 
@@ -317,7 +317,7 @@ VOID PhShowHandleObjectProperties1(
 
         if (!NT_SUCCESS(status))
         {
-            PhShowStatus(hWnd, L"Unable to query the section.", status, 0);
+            PhShowStatus(hWnd, L"无法查询节区。", status, 0);
         }
     }
     else if (PhEqualString2(Info->TypeName, L"Thread", TRUE))
@@ -407,7 +407,7 @@ VOID PhShowHandleObjectProperties1(
             }
             else
             {
-                PhShowError2(hWnd, L"Unable to show the process properties.", L"%s", L"The process does not exist.");
+                PhShowError2(hWnd, L"无法显示进程属性。", L"%s", L"进程不存在。");
             }
         }
     }
@@ -422,11 +422,11 @@ VOID PhShowHandleObjectProperties2(
         return;
 
     if (PhEqualString2(Info->TypeName, L"File", TRUE) || PhEqualString2(Info->TypeName, L"DLL", TRUE) ||
-        PhEqualString2(Info->TypeName, L"Mapped file", TRUE) || PhEqualString2(Info->TypeName, L"Mapped image", TRUE))
+        PhEqualString2(Info->TypeName, L"映射文件", TRUE) || PhEqualString2(Info->TypeName, L"映射映像", TRUE))
     {
         if (Info->BestObjectName)
             PhShellProperties(hWnd, Info->BestObjectName->Buffer);
         else
-            PhShowError2(hWnd, L"Unable to open the file properties.", L"%s", L"The object is unnamed.");
+            PhShowError2(hWnd, L"无法打开文件属性。", L"%s", L"对象未命名。");
     }
 }

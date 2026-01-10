@@ -172,8 +172,8 @@ INT_PTR CALLBACK PhpLogDlgProc(
 
             PhSetListViewStyle(ListViewHandle, FALSE, TRUE);
             PhSetControlTheme(ListViewHandle, L"explorer");
-            PhAddListViewColumn(ListViewHandle, 0, 0, 0, LVCFMT_LEFT, 140, L"Time");
-            PhAddListViewColumn(ListViewHandle, 1, 1, 1, LVCFMT_LEFT, 260, L"Message");
+            PhAddListViewColumn(ListViewHandle, 0, 0, 0, LVCFMT_LEFT, 140, L"时间");
+            PhAddListViewColumn(ListViewHandle, 1, 1, 1, LVCFMT_LEFT, 260, L"消息");
             PhLoadListViewColumnsFromSetting(L"LogListViewColumns", ListViewHandle);
 
             PhInitializeLayoutManager(&WindowLayoutManager, hwndDlg);
@@ -266,15 +266,15 @@ INT_PTR CALLBACK PhpLogDlgProc(
                 {
                     static PH_FILETYPE_FILTER filters[] =
                     {
-                        { L"Text files (*.txt)", L"*.txt" },
-                        { L"All files (*.*)", L"*.*" }
+                        { L"文本文档 (*.txt)", L"*.txt" },
+                        { L"所有文件 (*.*)", L"*.*" }
                     };
                     PVOID fileDialog;
 
                     fileDialog = PhCreateSaveFileDialog();
 
                     PhSetFileDialogFilter(fileDialog, filters, sizeof(filters) / sizeof(PH_FILETYPE_FILTER));
-                    PhSetFileDialogFileName(fileDialog, L"System Informer Log.txt");
+                    PhSetFileDialogFileName(fileDialog, L"System Informer 日志文件.txt");
 
                     if (PhShowFileDialog(hwndDlg, fileDialog))
                     {
@@ -305,7 +305,7 @@ INT_PTR CALLBACK PhpLogDlgProc(
                         }
 
                         if (!NT_SUCCESS(status))
-                            PhShowStatus(hwndDlg, L"Unable to create the file", status, 0);
+                            PhShowStatus(hwndDlg, L"无法创建文件", status, 0);
                     }
 
                     PhFreeFileDialog(fileDialog);
@@ -417,7 +417,7 @@ INT_PTR CALLBACK PhpLogDlgProc(
                 if (numberOfItems != 0)
                 {
                     menu = PhCreateEMenu();
-                    PhInsertEMenuItem(menu, PhCreateEMenuItem(0, IDC_COPY, L"&Copy", NULL, NULL), ULONG_MAX);
+                    PhInsertEMenuItem(menu, PhCreateEMenuItem(0, IDC_COPY, L"复制(&C)", NULL, NULL), ULONG_MAX);
                     PhInsertCopyListViewEMenuItem(menu, IDC_COPY, ListViewHandle);
 
                     item = PhShowEMenu(

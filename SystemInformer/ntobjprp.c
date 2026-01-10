@@ -157,22 +157,22 @@ static VOID PhpRefreshEventPageInfo(
         )))
     {
         EVENT_BASIC_INFORMATION basicInfo;
-        PWSTR eventType = L"Unknown";
-        PWSTR eventState = L"Unknown";
+        PWSTR eventType = L"未知";
+        PWSTR eventState = L"未知";
 
         if (NT_SUCCESS(PhGetEventBasicInformation(eventHandle, &basicInfo)))
         {
             switch (basicInfo.EventType)
             {
             case NotificationEvent:
-                eventType = L"Notification";
+                eventType = L"通知对象";
                 break;
             case SynchronizationEvent:
-                eventType = L"Synchronization";
+                eventType = L"同步对象";
                 break;
             }
 
-            eventState = basicInfo.EventState > 0 ? L"True" : L"False";
+            eventState = basicInfo.EventState > 0 ? L"是" : L"否";
         }
 
         PhSetDialogItemText(hwndDlg, IDC_TYPE, eventType);
@@ -240,7 +240,7 @@ INT_PTR CALLBACK PhpEventPageProc(
                     PhpRefreshEventPageInfo(hwndDlg, pageContext);
 
                     if (!NT_SUCCESS(status))
-                        PhShowStatus(hwndDlg, L"Unable to open the event", status, 0);
+                        PhShowStatus(hwndDlg, L"无法打开事件对象", status, 0);
                 }
                 break;
             }
@@ -315,7 +315,7 @@ INT_PTR CALLBACK PhpEventPairPageProc(
                     }
 
                     if (!NT_SUCCESS(status))
-                        PhShowStatus(hwndDlg, L"Unable to open the event pair", status, 0);
+                        PhShowStatus(hwndDlg, L"无法打开事件对", status, 0);
                 }
                 break;
             }
@@ -361,8 +361,8 @@ static VOID PhpRefreshSemaphorePageInfo(
         }
         else
         {
-            PhSetDialogItemText(hwndDlg, IDC_CURRENTCOUNT, L"Unknown");
-            PhSetDialogItemText(hwndDlg, IDC_MAXIMUMCOUNT, L"Unknown");
+            PhSetDialogItemText(hwndDlg, IDC_CURRENTCOUNT, L"未知");
+            PhSetDialogItemText(hwndDlg, IDC_MAXIMUMCOUNT, L"未知");
         }
 
         NtClose(semaphoreHandle);
@@ -428,7 +428,7 @@ INT_PTR CALLBACK PhpSemaphorePageProc(
                     PhpRefreshSemaphorePageInfo(hwndDlg, pageContext);
 
                     if (!NT_SUCCESS(status))
-                        PhShowStatus(hwndDlg, L"Unable to open the semaphore", status, 0);
+                        PhShowStatus(hwndDlg, L"无法打开信号量", status, 0);
                 }
                 break;
             }
@@ -469,11 +469,11 @@ static VOID PhpRefreshTimerPageInfo(
 
         if (NT_SUCCESS(PhGetTimerBasicInformation(timerHandle, &basicInfo)))
         {
-            PhSetDialogItemText(hwndDlg, IDC_SIGNALED, basicInfo.TimerState ? L"True" : L"False");
+            PhSetDialogItemText(hwndDlg, IDC_SIGNALED, basicInfo.TimerState ? L"是" : L"否");
         }
         else
         {
-            PhSetDialogItemText(hwndDlg, IDC_SIGNALED, L"Unknown");
+            PhSetDialogItemText(hwndDlg, IDC_SIGNALED, L"未知");
         }
 
         NtClose(timerHandle);
@@ -530,7 +530,7 @@ INT_PTR CALLBACK PhpTimerPageProc(
                     PhpRefreshTimerPageInfo(hwndDlg, pageContext);
 
                     if (!NT_SUCCESS(status))
-                        PhShowStatus(hwndDlg, L"Unable to open the timer", status, 0);
+                        PhShowStatus(hwndDlg, L"无法打开计时器", status, 0);
                 }
                 break;
             }
@@ -570,7 +570,7 @@ VOID PhpEnumerateMappingsEntries(
         ShowWindow(statusWindow, SW_SHOW);
 
         statusText = PhGetKsiNotConnectedString(
-            L"Viewing active mappings requires a connection to the kernel driver."
+            L"查看活动映射需要连接到内核驱动程序。"
             );
         PhSetWindowText(statusWindow, PhGetString(statusText));
         //SendMessage(statusWindow, EM_SETSEL, (WPARAM)-1, (LPARAM)-1);
@@ -618,15 +618,15 @@ VOID PhpEnumerateMappingsEntries(
         }
         else if (info->ViewMapType == VIEW_MAP_TYPE_SESSION)
         {
-            lvItemIndex = PhAddListViewItem(Context->ListViewHandle, MAXINT, L"Session", info);
+            lvItemIndex = PhAddListViewItem(Context->ListViewHandle, MAXINT, L"会话", info);
         }
         else if (info->ViewMapType == VIEW_MAP_TYPE_SYSTEM_CACHE)
         {
-            lvItemIndex = PhAddListViewItem(Context->ListViewHandle, MAXINT, L"System", info);
+            lvItemIndex = PhAddListViewItem(Context->ListViewHandle, MAXINT, L"系统", info);
         }
         else
         {
-            lvItemIndex = PhAddListViewItem(Context->ListViewHandle, MAXINT, L"Unknown", info);
+            lvItemIndex = PhAddListViewItem(Context->ListViewHandle, MAXINT, L"未知", info);
         }
 
         PhPrintPointer(value, info->StartVa);
@@ -658,7 +658,7 @@ VOID PhpShowProcessForMapping(
     }
     else
     {
-        PhShowStatus(hwndDlg, L"The process does not exist.", STATUS_INVALID_CID, 0);
+        PhShowStatus(hwndDlg, L"进程不存在。", STATUS_INVALID_CID, 0);
     }
 }
 
@@ -685,10 +685,10 @@ INT_PTR CALLBACK PhpMappingsPageProc(
 
             PhSetListViewStyle(context->ListViewHandle, TRUE, TRUE);
             PhSetControlTheme(context->ListViewHandle, L"explorer");
-            PhAddListViewColumn(context->ListViewHandle, 0, 0, 0, LVCFMT_LEFT, 140, L"View");
-            PhAddListViewColumn(context->ListViewHandle, 1, 1, 1, LVCFMT_LEFT, 100, L"Start");
-            PhAddListViewColumn(context->ListViewHandle, 2, 2, 2, LVCFMT_LEFT, 100, L"End");
-            PhAddListViewColumn(context->ListViewHandle, 3, 3, 3, LVCFMT_RIGHT, 60, L"Size");
+            PhAddListViewColumn(context->ListViewHandle, 0, 0, 0, LVCFMT_LEFT, 140, L"查看");
+            PhAddListViewColumn(context->ListViewHandle, 1, 1, 1, LVCFMT_LEFT, 100, L"开始");
+            PhAddListViewColumn(context->ListViewHandle, 2, 2, 2, LVCFMT_LEFT, 100, L"结束");
+            PhAddListViewColumn(context->ListViewHandle, 3, 3, 3, LVCFMT_RIGHT, 60, L"大小");
             PhSetExtendedListView(context->ListViewHandle);
 
             PhpEnumerateMappingsEntries(context);
@@ -722,10 +722,10 @@ INT_PTR CALLBACK PhpMappingsPageProc(
             menu = PhCreateEMenu();
             if (info && info->ViewMapType == VIEW_MAP_TYPE_PROCESS)
             {
-                PhInsertEMenuItem(menu, PhCreateEMenuItem(0, 1, L"&Go to process", NULL, NULL), ULONG_MAX);
+                PhInsertEMenuItem(menu, PhCreateEMenuItem(0, 1, L"转到进程(&G)", NULL, NULL), ULONG_MAX);
                 PhInsertEMenuItem(menu, PhCreateEMenuSeparator(), ULONG_MAX);
             }
-            PhInsertEMenuItem(menu, PhCreateEMenuItem(0, IDC_COPY, L"&Copy", NULL, NULL), ULONG_MAX);
+            PhInsertEMenuItem(menu, PhCreateEMenuItem(0, IDC_COPY, L"复制(&C)", NULL, NULL), ULONG_MAX);
             PhInsertCopyListViewEMenuItem(menu, IDC_COPY, context->ListViewHandle);
 
             item = PhShowEMenu(

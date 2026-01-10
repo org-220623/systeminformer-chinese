@@ -1847,26 +1847,26 @@ static PH_KEY_VALUE_PAIR PhProtocolTypeStrings[] =
 
 static PH_KEY_VALUE_PAIR PhTcpStateStrings[] =
 {
-    SIP(SREF(L"Closed"), MIB_TCP_STATE_CLOSED),
-    SIP(SREF(L"Listen"), MIB_TCP_STATE_LISTEN),
-    SIP(SREF(L"SYN sent"), MIB_TCP_STATE_SYN_SENT),
-    SIP(SREF(L"SYN received"), MIB_TCP_STATE_SYN_RCVD),
-    SIP(SREF(L"Established"), MIB_TCP_STATE_ESTAB),
-    SIP(SREF(L"FIN wait 1"), MIB_TCP_STATE_FIN_WAIT1),
-    SIP(SREF(L"FIN wait 2"), MIB_TCP_STATE_FIN_WAIT2),
-    SIP(SREF(L"Close wait"), MIB_TCP_STATE_CLOSE_WAIT),
-    SIP(SREF(L"Closing"), MIB_TCP_STATE_CLOSING),
-    SIP(SREF(L"Last ACK"), MIB_TCP_STATE_LAST_ACK),
-    SIP(SREF(L"Time wait"), MIB_TCP_STATE_TIME_WAIT),
-    SIP(SREF(L"Delete TCB"), MIB_TCP_STATE_DELETE_TCB),
-    SIP(SREF(L"Bound"), MIB_TCP_STATE_RESERVED),
+    SIP(SREF(L"已关闭"), MIB_TCP_STATE_CLOSED),
+    SIP(SREF(L"监听"), MIB_TCP_STATE_LISTEN),
+    SIP(SREF(L"SYN 已发送"), MIB_TCP_STATE_SYN_SENT),
+    SIP(SREF(L"SYN 已接收"), MIB_TCP_STATE_SYN_RCVD),
+    SIP(SREF(L"已建立连接"), MIB_TCP_STATE_ESTAB),
+    SIP(SREF(L"FIN 等待状态 1"), MIB_TCP_STATE_FIN_WAIT1),
+    SIP(SREF(L"FIN 等待状态 2"), MIB_TCP_STATE_FIN_WAIT2),
+    SIP(SREF(L"关闭等待"), MIB_TCP_STATE_CLOSE_WAIT),
+    SIP(SREF(L"正在关闭"), MIB_TCP_STATE_CLOSING),
+    SIP(SREF(L"最后 ACK"), MIB_TCP_STATE_LAST_ACK),
+    SIP(SREF(L"时间等待"), MIB_TCP_STATE_TIME_WAIT),
+    SIP(SREF(L"删除 TCB"), MIB_TCP_STATE_DELETE_TCB),
+    SIP(SREF(L"已绑定"), MIB_TCP_STATE_RESERVED),
 };
 
 PPH_STRINGREF PhGetProtocolTypeName(
     _In_ ULONG ProtocolType
     )
 {
-    static PH_STRINGREF unknown = PH_STRINGREF_INIT(L"Unknown");
+    static PH_STRINGREF unknown = PH_STRINGREF_INIT(L"未知");
     PPH_STRINGREF string;
 
     if (PhFindStringSiKeyValuePairs(
@@ -1886,7 +1886,7 @@ PPH_STRINGREF PhGetTcpStateName(
     _In_ ULONG State
     )
 {
-    static PH_STRINGREF unknown = PH_STRINGREF_INIT(L"Unknown");
+    static PH_STRINGREF unknown = PH_STRINGREF_INIT(L"未知");
     PPH_STRINGREF string;
 
     if (PhFindStringSiKeyValuePairs(

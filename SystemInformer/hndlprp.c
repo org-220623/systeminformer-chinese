@@ -108,12 +108,12 @@ typedef struct _HANDLE_PROPERTIES_CONTEXT
 
 CONST PH_ACCESS_ENTRY FileModeAccessEntries[6] =
 {
-    { L"FILE_FLAG_OVERLAPPED", PH_FILEMODE_ASYNC, FALSE, FALSE, L"Asynchronous" },
-    { L"FILE_FLAG_WRITE_THROUGH", FILE_WRITE_THROUGH, FALSE, FALSE, L"Write through" },
-    { L"FILE_FLAG_SEQUENTIAL_SCAN", FILE_SEQUENTIAL_ONLY, FALSE, FALSE, L"Sequential" },
-    { L"FILE_FLAG_NO_BUFFERING", FILE_NO_INTERMEDIATE_BUFFERING, FALSE, FALSE, L"No buffering" },
-    { L"FILE_SYNCHRONOUS_IO_ALERT", FILE_SYNCHRONOUS_IO_ALERT, FALSE, FALSE, L"Synchronous alert" },
-    { L"FILE_SYNCHRONOUS_IO_NONALERT", FILE_SYNCHRONOUS_IO_NONALERT, FALSE, FALSE, L"Synchronous non-alert" },
+    { L"FILE_FLAG_OVERLAPPED", PH_FILEMODE_ASYNC, FALSE, FALSE, L"异步" },
+    { L"FILE_FLAG_WRITE_THROUGH", FILE_WRITE_THROUGH, FALSE, FALSE, L"直写" },
+    { L"FILE_FLAG_SEQUENTIAL_SCAN", FILE_SEQUENTIAL_ONLY, FALSE, FALSE, L"顺序" },
+    { L"FILE_FLAG_NO_BUFFERING", FILE_NO_INTERMEDIATE_BUFFERING, FALSE, FALSE, L"无缓冲" },
+    { L"FILE_SYNCHRONOUS_IO_ALERT", FILE_SYNCHRONOUS_IO_ALERT, FALSE, FALSE, L"同步警报" },
+    { L"FILE_SYNCHRONOUS_IO_NONALERT", FILE_SYNCHRONOUS_IO_NONALERT, FALSE, FALSE, L"同步非警报" },
 };
 
 INT_PTR CALLBACK PhpHandleGeneralDlgProc(
@@ -384,17 +384,17 @@ VOID PhpUpdateHandleGeneralListViewGroups(
     )
 {
     IListView_EnableGroupView(Context->ListViewClass, TRUE);
-    PhAddIListViewGroup(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_BASICINFO, L"Basic information");
-    PhAddIListViewGroup(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_REFERENCES, L"References");
-    PhAddIListViewGroup(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_QUOTA, L"Quota charges");
-    PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_BASICINFO, PH_HANDLE_GENERAL_INDEX_NAME, L"Name", NULL);
+    PhAddIListViewGroup(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_BASICINFO, L"基本信息");
+    PhAddIListViewGroup(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_REFERENCES, L"引用");
+    PhAddIListViewGroup(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_QUOTA, L"配额用量");
+    PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_BASICINFO, PH_HANDLE_GENERAL_INDEX_NAME, L"名称", NULL);
     PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_BASICINFO, PH_HANDLE_GENERAL_INDEX_TYPE, L"Type", NULL);
-    PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_BASICINFO, PH_HANDLE_GENERAL_INDEX_OBJECT, L"Object address", NULL);
-    PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_BASICINFO, PH_HANDLE_GENERAL_INDEX_ACCESSMASK, L"Granted access", NULL);
-    PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_REFERENCES, PH_HANDLE_GENERAL_INDEX_REFERENCES, L"References", NULL);
-    PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_REFERENCES, PH_HANDLE_GENERAL_INDEX_HANDLES, L"Handles", NULL);
-    PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_QUOTA, PH_HANDLE_GENERAL_INDEX_PAGED, L"Paged", NULL);
-    PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_QUOTA, PH_HANDLE_GENERAL_INDEX_NONPAGED, L"Virtual size", NULL);
+    PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_BASICINFO, PH_HANDLE_GENERAL_INDEX_OBJECT, L"对象地址", NULL);
+    PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_BASICINFO, PH_HANDLE_GENERAL_INDEX_ACCESSMASK, L"已授予访问权限", NULL);
+    PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_REFERENCES, PH_HANDLE_GENERAL_INDEX_REFERENCES, L"引用", NULL);
+    PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_REFERENCES, PH_HANDLE_GENERAL_INDEX_HANDLES, L"句柄", NULL);
+    PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_QUOTA, PH_HANDLE_GENERAL_INDEX_PAGED, L"分页", NULL);
+    PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_QUOTA, PH_HANDLE_GENERAL_INDEX_NONPAGED, L"虚拟大小", NULL);
 
     if (PhIsNullOrEmptyString(Context->HandleItem->TypeName))
     {
@@ -403,77 +403,77 @@ VOID PhpUpdateHandleGeneralListViewGroups(
     else if (PhEqualString2(Context->HandleItem->TypeName, L"ALPC Port", TRUE))
     {
         PhAddIListViewGroup(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_ALPC, L"ALPC Port");
-        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_ALPC, PH_HANDLE_GENERAL_INDEX_FLAGS, L"Flags", NULL);
-        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_ALPC, PH_HANDLE_GENERAL_INDEX_SEQUENCENUMBER, L"Sequence Number", NULL);
-        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_ALPC, PH_HANDLE_GENERAL_INDEX_PORTCONTEXT, L"Port Context", NULL);
+        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_ALPC, PH_HANDLE_GENERAL_INDEX_FLAGS, L"标志", NULL);
+        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_ALPC, PH_HANDLE_GENERAL_INDEX_SEQUENCENUMBER, L"序列号", NULL);
+        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_ALPC, PH_HANDLE_GENERAL_INDEX_PORTCONTEXT, L"端口上下文", NULL);
 
         if (WindowsVersion >= WINDOWS_10_19H2)
         {
-            PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_ALPC, PH_HANDLE_GENERAL_INDEX_MUTANTOWNER, L"Owner", NULL);
+            PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_ALPC, PH_HANDLE_GENERAL_INDEX_MUTANTOWNER, L"所有者", NULL);
         }
 
         if (KsiLevel() >= KphLevelMed)
         {
-            PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_ALPC, PH_HANDLE_GENERAL_INDEX_ALPCCONNECTION, L"Connection", NULL);
-            PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_ALPC, PH_HANDLE_GENERAL_INDEX_ALPCSERVER, L"Server", NULL);
-            PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_ALPC, PH_HANDLE_GENERAL_INDEX_ALPCCLIENT, L"Client", NULL);
+            PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_ALPC, PH_HANDLE_GENERAL_INDEX_ALPCCONNECTION, L"连接", NULL);
+            PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_ALPC, PH_HANDLE_GENERAL_INDEX_ALPCSERVER, L"服务端", NULL);
+            PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_ALPC, PH_HANDLE_GENERAL_INDEX_ALPCCLIENT, L"客户端", NULL);
         }
     }
     else if (PhEqualString2(Context->HandleItem->TypeName, L"EtwRegistration", TRUE))
     {
-        PhAddIListViewGroup(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_ETW, L"Event trace information");
+        PhAddIListViewGroup(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_ETW, L"事件跟踪信息");
         PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_ETW, PH_HANDLE_GENERAL_INDEX_ETWORIGINALNAME, L"GUID", NULL);
         //PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_ETW, PH_HANDLE_GENERAL_INDEX_ETWGROUPNAME, L"Group GUID", NULL);
     }
     else if (PhEqualStringRef2(&Context->HandleItem->TypeName->sr, L"File", TRUE))
     {
-        PhAddIListViewGroup(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_FILE, L"File information");
+        PhAddIListViewGroup(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_FILE, L"文件信息");
         PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_FILE, PH_HANDLE_GENERAL_INDEX_FILETYPE, L"Type", NULL);
-        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_FILE, PH_HANDLE_GENERAL_INDEX_FILEMODE, L"Mode", NULL);
-        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_FILE, PH_HANDLE_GENERAL_INDEX_FILEPOSITION, L"Position", NULL);
-        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_FILE, PH_HANDLE_GENERAL_INDEX_FILESIZE, L"Size", NULL);
-        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_FILE, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, L"Priority", NULL);
+        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_FILE, PH_HANDLE_GENERAL_INDEX_FILEMODE, L"模式", NULL);
+        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_FILE, PH_HANDLE_GENERAL_INDEX_FILEPOSITION, L"位置", NULL);
+        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_FILE, PH_HANDLE_GENERAL_INDEX_FILESIZE, L"大小", NULL);
+        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_FILE, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, L"优先级", NULL);
 
         if (KsiLevel() >= KphLevelMed)
         {
             PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_FILE, PH_HANDLE_GENERAL_INDEX_FILEDRIVER, L"Driver", NULL);
-            PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_FILE, PH_HANDLE_GENERAL_INDEX_FILEDRIVERIMAGE, L"Driver Image", NULL);
+            PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_FILE, PH_HANDLE_GENERAL_INDEX_FILEDRIVERIMAGE, L"驱动映像", NULL);
         }
     }
     else if (PhEqualStringRef2(&Context->HandleItem->TypeName->sr, L"Section", TRUE))
     {
-        PhAddIListViewGroup(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_SECTION, L"Section information");
+        PhAddIListViewGroup(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_SECTION, L"节区信息");
         PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_SECTION, PH_HANDLE_GENERAL_INDEX_SECTIONTYPE, L"Type", NULL);
         PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_SECTION, PH_HANDLE_GENERAL_INDEX_SECTIONFILE, L"File", NULL);
-        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_SECTION, PH_HANDLE_GENERAL_INDEX_SECTIONSIZE, L"Size", NULL);
+        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_SECTION, PH_HANDLE_GENERAL_INDEX_SECTIONSIZE, L"大小", NULL);
     }
     else if (PhEqualStringRef2(&Context->HandleItem->TypeName->sr, L"Mutant", TRUE))
     {
-        PhAddIListViewGroup(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_MUTANT, L"Mutant information");
-        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_MUTANT, PH_HANDLE_GENERAL_INDEX_MUTANTCOUNT, L"Count", NULL);
-        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_MUTANT, PH_HANDLE_GENERAL_INDEX_MUTANTABANDONED, L"Abandoned", NULL);
-        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_MUTANT, PH_HANDLE_GENERAL_INDEX_MUTANTOWNER, L"Owner", NULL);
+        PhAddIListViewGroup(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_MUTANT, L"互斥体信息");
+        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_MUTANT, PH_HANDLE_GENERAL_INDEX_MUTANTCOUNT, L"计数", NULL);
+        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_MUTANT, PH_HANDLE_GENERAL_INDEX_MUTANTABANDONED, L"废弃", NULL);
+        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_MUTANT, PH_HANDLE_GENERAL_INDEX_MUTANTOWNER, L"所有者", NULL);
     }
     else if (PhEqualStringRef2(&Context->HandleItem->TypeName->sr, L"Process", TRUE))
     {
-        PhAddIListViewGroup(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_PROCESSTHREAD, L"Process information");
-        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_PROCESSTHREAD, PH_HANDLE_GENERAL_INDEX_PROCESSTHREADNAME, L"Name", NULL);
-        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_PROCESSTHREAD, PH_HANDLE_GENERAL_INDEX_PROCESSTHREADCREATETIME, L"Created", NULL);
-        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_PROCESSTHREAD, PH_HANDLE_GENERAL_INDEX_PROCESSTHREADEXITTIME, L"Exited", NULL);
-        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_PROCESSTHREAD, PH_HANDLE_GENERAL_INDEX_PROCESSTHREADEXITCODE, L"Exit status", NULL);
+        PhAddIListViewGroup(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_PROCESSTHREAD, L"进程信息");
+        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_PROCESSTHREAD, PH_HANDLE_GENERAL_INDEX_PROCESSTHREADNAME, L"名称", NULL);
+        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_PROCESSTHREAD, PH_HANDLE_GENERAL_INDEX_PROCESSTHREADCREATETIME, L"创建于", NULL);
+        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_PROCESSTHREAD, PH_HANDLE_GENERAL_INDEX_PROCESSTHREADEXITTIME, L"退出于", NULL);
+        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_PROCESSTHREAD, PH_HANDLE_GENERAL_INDEX_PROCESSTHREADEXITCODE, L"退出代码", NULL);
     }
     else if (PhEqualStringRef2(&Context->HandleItem->TypeName->sr, L"Thread", TRUE))
     {
-        PhAddIListViewGroup(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_PROCESSTHREAD, L"Thread information");
-        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_PROCESSTHREAD, PH_HANDLE_GENERAL_INDEX_PROCESSTHREADNAME, L"Name", NULL);
-        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_PROCESSTHREAD, PH_HANDLE_GENERAL_INDEX_PROCESSTHREADCREATETIME, L"Created", NULL);
-        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_PROCESSTHREAD, PH_HANDLE_GENERAL_INDEX_PROCESSTHREADEXITTIME, L"Exited", NULL);
-        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_PROCESSTHREAD, PH_HANDLE_GENERAL_INDEX_PROCESSTHREADEXITCODE, L"Exit status", NULL);
+        PhAddIListViewGroup(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_PROCESSTHREAD, L"线程信息");
+        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_PROCESSTHREAD, PH_HANDLE_GENERAL_INDEX_PROCESSTHREADNAME, L"名称", NULL);
+        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_PROCESSTHREAD, PH_HANDLE_GENERAL_INDEX_PROCESSTHREADCREATETIME, L"创建于", NULL);
+        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_PROCESSTHREAD, PH_HANDLE_GENERAL_INDEX_PROCESSTHREADEXITTIME, L"退出于", NULL);
+        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_PROCESSTHREAD, PH_HANDLE_GENERAL_INDEX_PROCESSTHREADEXITCODE, L"退出代码", NULL);
     }
     else if (PhEqualStringRef2(&Context->HandleItem->TypeName->sr, L"SymbolicLink", TRUE))
     {
-        PhAddIListViewGroup(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_SYMBOLICLINK, L"Symbolic Link information");
-        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_SYMBOLICLINK, PH_HANDLE_GENERAL_INDEX_SYMBOLICLINKLINK, L"Link target", NULL);
+        PhAddIListViewGroup(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_SYMBOLICLINK, L"符号链接信息");
+        PhAddIListViewGroupItem(Context->ListViewClass, PH_HANDLE_GENERAL_CATEGORY_SYMBOLICLINK, PH_HANDLE_GENERAL_INDEX_SYMBOLICLINKLINK, L"链接目标", NULL);
     }
 }
 
@@ -977,7 +977,7 @@ VOID PhpUpdateHandleGeneral(
                     break;
                 case FILE_DEVICE_NETWORK:
                     //isNetworkHandle = TRUE;
-                    PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILETYPE, 1, L"Network");
+                    PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILETYPE, 1, L"网络");
                     break;
                 case FILE_DEVICE_CD_ROM:
                 case FILE_DEVICE_CD_ROM_FILE_SYSTEM:
@@ -988,14 +988,14 @@ VOID PhpUpdateHandleGeneral(
                 case FILE_DEVICE_DISK_FILE_SYSTEM:
                 case FILE_DEVICE_VIRTUAL_DISK:
                     isFileOrDirectory = TRUE;
-                    PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILETYPE, 1, L"File or directory");
+                    PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILETYPE, 1, L"文件或目录");
                     break;
                 case FILE_DEVICE_CONSOLE:
                     isConsoleHandle = TRUE;
-                    PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILETYPE, 1, L"Console");
+                    PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILETYPE, 1, L"控制台");
                     break;
                 default:
-                    PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILETYPE, 1, L"Other");
+                    PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILETYPE, 1, L"其他");
                     break;
                 }
             }
@@ -1116,19 +1116,19 @@ VOID PhpUpdateHandleGeneral(
                 switch (priorityInfo.PriorityHint)
                 {
                 case IoPriorityVeryLow:
-                    PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, 1, L"Very Low");
+                    PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, 1, L"非常低");
                     break;
                 case IoPriorityLow:
-                    PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, 1, L"Low");
+                    PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, 1, L"低");
                     break;
                 case IoPriorityNormal:
-                    PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, 1, L"Normal");
+                    PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, 1, L"正常");
                     break;
                 case IoPriorityHigh:
-                    PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, 1, L"High");
+                    PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, 1, L"高");
                     break;
                 case IoPriorityCritical:
-                    PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, 1, L"Critical");
+                    PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, 1, L"关键");
                     break;
                 }
             }
@@ -1272,7 +1272,7 @@ VOID PhpUpdateHandleGeneral(
                         break;
                     case FILE_DEVICE_NETWORK:
                         //isNetworkHandle = TRUE;
-                        PhSetIListViewSubItem(Context->ListViewClass, PH_HANDLE_GENERAL_INDEX_FILETYPE, 1, L"Network");
+                        PhSetIListViewSubItem(Context->ListViewClass, PH_HANDLE_GENERAL_INDEX_FILETYPE, 1, L"网络");
                         break;
                     case FILE_DEVICE_CD_ROM:
                     case FILE_DEVICE_CD_ROM_FILE_SYSTEM:
@@ -1283,14 +1283,14 @@ VOID PhpUpdateHandleGeneral(
                     case FILE_DEVICE_DISK_FILE_SYSTEM:
                     case FILE_DEVICE_VIRTUAL_DISK:
                         isFileOrDirectory = TRUE;
-                        PhSetIListViewSubItem(Context->ListViewClass, PH_HANDLE_GENERAL_INDEX_FILETYPE, 1, L"File or directory");
+                        PhSetIListViewSubItem(Context->ListViewClass, PH_HANDLE_GENERAL_INDEX_FILETYPE, 1, L"文件或目录");
                         break;
                     case FILE_DEVICE_CONSOLE:
                         isConsoleHandle = TRUE;
-                        PhSetIListViewSubItem(Context->ListViewClass, PH_HANDLE_GENERAL_INDEX_FILETYPE, 1, L"Console");
+                        PhSetIListViewSubItem(Context->ListViewClass, PH_HANDLE_GENERAL_INDEX_FILETYPE, 1, L"控制台");
                         break;
                     default:
-                        PhSetIListViewSubItem(Context->ListViewClass, PH_HANDLE_GENERAL_INDEX_FILETYPE, 1, L"Other");
+                        PhSetIListViewSubItem(Context->ListViewClass, PH_HANDLE_GENERAL_INDEX_FILETYPE, 1, L"其他");
                         break;
                     }
                 }
@@ -1408,19 +1408,19 @@ VOID PhpUpdateHandleGeneral(
                     switch (priorityInfo.PriorityHint)
                     {
                     case IoPriorityVeryLow:
-                        PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, 1, L"Very Low");
+                        PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, 1, L"非常低");
                         break;
                     case IoPriorityLow:
-                        PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, 1, L"Low");
+                        PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, 1, L"低");
                         break;
                     case IoPriorityNormal:
-                        PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, 1, L"Normal");
+                        PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, 1, L"正常");
                         break;
                     case IoPriorityHigh:
-                        PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, 1, L"High");
+                        PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, 1, L"高");
                         break;
                     case IoPriorityCritical:
-                        PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, 1, L"Critical");
+                        PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_FILEPRIORITY, 1, L"关键");
                         break;
                     }
                 }
@@ -1542,17 +1542,17 @@ VOID PhpUpdateHandleGeneral(
 
         if (NT_SUCCESS(status))
         {
-            PCWSTR sectionType = L"Unknown";
+            PCWSTR sectionType = L"未知";
             PPH_STRING sectionSize = NULL;
 
             if (FlagOn(basicInfo.AllocationAttributes, SEC_COMMIT))
-                sectionType = L"Commit";
+                sectionType = L"提交";
             else if (FlagOn(basicInfo.AllocationAttributes, SEC_FILE))
-                sectionType = L"File";
+                sectionType = L"文件";
             else if (FlagOn(basicInfo.AllocationAttributes, SEC_IMAGE))
-                sectionType = L"Image";
+                sectionType = L"映像";
             else if (FlagOn(basicInfo.AllocationAttributes, SEC_RESERVE))
-                sectionType = L"Reserve";
+                sectionType = L"保留";
 
             sectionSize = PhaFormatSize(basicInfo.MaximumSize.QuadPart, ULONG_MAX);
 
@@ -1563,7 +1563,7 @@ VOID PhpUpdateHandleGeneral(
 
             PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_SECTIONFILE, 1, PhGetStringOrDefault(fileName, L"N/A"));
             PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_SECTIONTYPE, 1, sectionType);
-            PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_SECTIONSIZE, 1, PhGetStringOrDefault(sectionSize, L"Unknown"));
+            PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_SECTIONSIZE, 1, PhGetStringOrDefault(sectionSize, L"未知"));
         }
     }
     else if (PhEqualString2(Context->HandleItem->TypeName, L"Mutant", TRUE))
@@ -1759,7 +1759,7 @@ VOID PhpUpdateHandleGeneral(
             PPH_STRING exitcode;
 
             message = PhGetStatusMessage(exitStatus, 0);
-            exitcode = PhFormatString(L"0x%x (%s)", exitStatus, PhGetStringOrDefault(message, L"Unknown"));
+            exitcode = PhFormatString(L"0x%x (%s)", exitStatus, PhGetStringOrDefault(message, L"未知"));
             PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_PROCESSTHREADEXITCODE, 1, PhGetStringOrEmpty(exitcode));
             PhClearReference(&exitcode);
             PhClearReference(&message);
@@ -1884,7 +1884,7 @@ VOID PhpUpdateHandleGeneral(
             PPH_STRING exitcode;
 
             message = PhGetStatusMessage(exitStatus, 0);
-            exitcode = PhFormatString(L"0x%x (%s)", exitStatus, PhGetStringOrDefault(message, L"Unknown"));
+            exitcode = PhFormatString(L"0x%x (%s)", exitStatus, PhGetStringOrDefault(message, L"未知"));
             PhSetListViewSubItem(Context->ListViewHandle, PH_HANDLE_GENERAL_INDEX_PROCESSTHREADEXITCODE, 1, PhGetStringOrEmpty(exitcode));
             PhClearReference(&exitcode);
             PhClearReference(&message);
@@ -1953,8 +1953,8 @@ INT_PTR CALLBACK PhpHandleGeneralDlgProc(
 
             PhSetListViewStyle(context->ListViewHandle, FALSE, TRUE);
             PhSetControlTheme(context->ListViewHandle, L"explorer");
-            PhAddListViewColumn(context->ListViewHandle, 0, 0, 0, LVCFMT_LEFT, 120, L"Name");
-            PhAddListViewColumn(context->ListViewHandle, 1, 1, 1, LVCFMT_LEFT, 250, L"Value");
+            PhAddListViewColumn(context->ListViewHandle, 0, 0, 0, LVCFMT_LEFT, 120, L"名称");
+            PhAddListViewColumn(context->ListViewHandle, 1, 1, 1, LVCFMT_LEFT, 250, L"值");
             PhSetExtendedListView(context->ListViewHandle);
 
             // Plugins can load window position in GeneralCallbackHandlePropertiesWindowInitialized, ex. Object Manager (Dart Vanya)
@@ -2046,7 +2046,7 @@ INT_PTR CALLBACK PhpHandleGeneralDlgProc(
                 {
                     menu = PhCreateEMenu();
 
-                    PhInsertEMenuItem(menu, PhCreateEMenuItem(0, IDC_COPY, L"&Copy", NULL, NULL), ULONG_MAX);
+                    PhInsertEMenuItem(menu, PhCreateEMenuItem(0, IDC_COPY, L"复制(&C)", NULL, NULL), ULONG_MAX);
                     PhInsertCopyListViewEMenuItem(menu, IDC_COPY, context->ListViewHandle);
 
                     item = PhShowEMenu(

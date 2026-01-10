@@ -260,7 +260,7 @@ PPH_STRING PhpGetProtectionString(
 {
     PH_FORMAT format[5];
     ULONG count = 0;
-    PWSTR type = L"Unknown";
+    PWSTR type = L"未知";
     PWSTR signer = L"";
 
     if (Protection.Level == 0)
@@ -309,11 +309,11 @@ BOOLEAN PhProcessProviderInitialization(
 
     PhInitializeSListHead(&PhProcessQueryDataListHead);
 
-    RtlInitUnicodeString(&PhDpcsProcessInformation->ImageName, L"DPCs");
+    RtlInitUnicodeString(&PhDpcsProcessInformation->ImageName, L"DPC");
     PhDpcsProcessInformation->UniqueProcessId = DPCS_PROCESS_ID;
     PhDpcsProcessInformation->InheritedFromUniqueProcessId = SYSTEM_IDLE_PROCESS_ID;
 
-    RtlInitUnicodeString(&PhInterruptsProcessInformation->ImageName, L"Interrupts");
+    RtlInitUnicodeString(&PhInterruptsProcessInformation->ImageName, L"中断");
     PhInterruptsProcessInformation->UniqueProcessId = INTERRUPTS_PROCESS_ID;
     PhInterruptsProcessInformation->InheritedFromUniqueProcessId = SYSTEM_IDLE_PROCESS_ID;
 
@@ -357,7 +357,7 @@ BOOLEAN PhProcessProviderInitialization(
     PhCpusKernelHistory = historyBuffer;
     PhCpusUserHistory = PhCpusKernelHistory + PhSystemProcessorInformation.NumberOfProcessors;
 
-    PhpProtectionUnknownString = PhCreateString(L"Unknown");
+    PhpProtectionUnknownString = PhCreateString(L"未知");
     PhpProtectionYesString = PhCreateString(L"Yes");
     PhpProtectionNoneString = PhCreateString(L"None");
     PhpProtectionSecureIUMString = PhCreateString(L"Secure (IUM)");
@@ -761,7 +761,7 @@ VOID PhpProcessQueryStage1(
 
         if (PhEnableCycleCpuUsage && processId == INTERRUPTS_PROCESS_ID)
         {
-            static PH_STRINGREF descriptionText = PH_STRINGREF_INIT(L"Interrupts and DPCs");
+            static PH_STRINGREF descriptionText = PH_STRINGREF_INIT(L"中断和 DPC");
             PhMoveReference(&Data->VersionInfo.FileDescription, PhCreateString2(&descriptionText));
         }
     }
@@ -2025,7 +2025,7 @@ PPH_STRING PhGetStatisticsTimeString(
     }
     else
     {
-        return PhCreateString(L"Unknown time");
+        return PhCreateString(L"未知时间");
     }
 }
 
@@ -2393,7 +2393,7 @@ VOID PhProcessProviderUpdate(
 
     // Add the fake processes to the PID list.
     //
-    // On Windows 7 the two fake processes are merged into "Interrupts" since we can only get cycle
+    // On Windows 7 the two fake processes are merged into "中断" since we can only get cycle
     // time information both DPCs and Interrupts combined.
 
     if (PhEnableCycleCpuUsage)
@@ -4133,7 +4133,7 @@ PPH_PROCESS_ITEM PhCreateProcessItemFromHandle(
     if (processItem->FileName)
         processItem->ProcessName = PhGetBaseName(processItem->FileName);
     else
-        processItem->ProcessName = PhCreateString(L"Unknown");
+        processItem->ProcessName = PhCreateString(L"未知");
 
     // Basic process information and not-so-dynamic information.
 

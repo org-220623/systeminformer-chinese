@@ -90,10 +90,10 @@ PPH_STRINGREF PhGetMemoryStateString(
 {
     static PH_STRINGREF MemoryStateString[] =
     {
-        PH_STRINGREF_INIT(L"Unknown"),
-        PH_STRINGREF_INIT(L"Commit"),
-        PH_STRINGREF_INIT(L"Reserved"),
-        PH_STRINGREF_INIT(L"Free"),
+        PH_STRINGREF_INIT(L"未知"),
+        PH_STRINGREF_INIT(L"提交"),
+        PH_STRINGREF_INIT(L"保留"),
+        PH_STRINGREF_INIT(L"空闲"),
     };
 
     if (FlagOn(State, MEM_COMMIT))
@@ -112,10 +112,10 @@ PPH_STRINGREF PhGetMemoryTypeString(
 {
     static PH_STRINGREF MemoryTypeString[] =
     {
-        PH_STRINGREF_INIT(L"Unknown"),
-        PH_STRINGREF_INIT(L"Private"),
-        PH_STRINGREF_INIT(L"Mapped"),
-        PH_STRINGREF_INIT(L"Image"),
+        PH_STRINGREF_INIT(L"未知"),
+        PH_STRINGREF_INIT(L"私有"),
+        PH_STRINGREF_INIT(L"已映射"),
+        PH_STRINGREF_INIT(L"映像"),
     };
 
     if (FlagOn(Type, MEM_PRIVATE))
@@ -134,8 +134,8 @@ PPH_STRINGREF PhGetSigningLevelString(
 {
     static PH_STRINGREF SigningLevelString[] =
     {
-        PH_STRINGREF_INIT(L"Unchecked"),
-        PH_STRINGREF_INIT(L"Unsigned"),
+        PH_STRINGREF_INIT(L"未检查"),
+        PH_STRINGREF_INIT(L"未签名"),
         PH_STRINGREF_INIT(L"Enterprise"),
         PH_STRINGREF_INIT(L"Developer"),
         PH_STRINGREF_INIT(L"Authenticode"),
@@ -181,9 +181,9 @@ PPH_STRINGREF PhGetSigningLevelString(
     //switch (SigningLevel)
     //{
     //    case SE_SIGNING_LEVEL_UNCHECKED:
-    //        return L"Unchecked";
+    //        return L"未检查";
     //    case SE_SIGNING_LEVEL_UNSIGNED:
-    //        return L"Unsigned";
+    //        return L"未签名";
     //    case SE_SIGNING_LEVEL_ENTERPRISE:
     //        return L"Enterprise";
     //    case SE_SIGNING_LEVEL_DEVELOPER:
@@ -226,31 +226,31 @@ PPH_STRING PhGetMemoryRegionTypeExString(
     PhInitializeStringBuilder(&stringBuilder, 0x50);
 
     if (MemoryItem->Private)
-        PhAppendStringBuilder2(&stringBuilder, L"Private, ");
+        PhAppendStringBuilder2(&stringBuilder, L"私有, ");
     if (MemoryItem->MappedDataFile)
-        PhAppendStringBuilder2(&stringBuilder, L"MappedDataFile, ");
+        PhAppendStringBuilder2(&stringBuilder, L"已映射数据文件, ");
     if (MemoryItem->MappedImage)
-        PhAppendStringBuilder2(&stringBuilder, L"MappedImage, ");
+        PhAppendStringBuilder2(&stringBuilder, L"已映射映像, ");
     if (MemoryItem->MappedPageFile)
-        PhAppendStringBuilder2(&stringBuilder, L"MappedPageFile, ");
+        PhAppendStringBuilder2(&stringBuilder, L"已映射页面文件, ");
     if (MemoryItem->MappedPhysical)
-        PhAppendStringBuilder2(&stringBuilder, L"MappedPhysical, ");
+        PhAppendStringBuilder2(&stringBuilder, L"已映射物理内存, ");
     if (MemoryItem->DirectMapped)
-        PhAppendStringBuilder2(&stringBuilder, L"DirectMapped, ");
+        PhAppendStringBuilder2(&stringBuilder, L"直接映射, ");
     if (MemoryItem->SoftwareEnclave)
-        PhAppendStringBuilder2(&stringBuilder, L"Software enclave, ");
+        PhAppendStringBuilder2(&stringBuilder, L"软件飞地, ");
     if (MemoryItem->PageSize64K)
-        PhAppendStringBuilder2(&stringBuilder, L"PageSize64K, ");
+        PhAppendStringBuilder2(&stringBuilder, L"64KiB 页面, ");
     if (MemoryItem->PlaceholderReservation)
-        PhAppendStringBuilder2(&stringBuilder, L"Placeholder, ");
+        PhAppendStringBuilder2(&stringBuilder, L"占位符, ");
     if (MemoryItem->MappedAwe)
-        PhAppendStringBuilder2(&stringBuilder, L"Mapped AWE, ");
+        PhAppendStringBuilder2(&stringBuilder, L"已映射 AWE, ");
     if (MemoryItem->MappedWriteWatch)
-        PhAppendStringBuilder2(&stringBuilder, L"MappedWriteWatch, ");
+        PhAppendStringBuilder2(&stringBuilder, L"已映射写入视图, ");
     if (MemoryItem->PageSizeLarge)
-        PhAppendStringBuilder2(&stringBuilder, L"PageSizeLarge, ");
+        PhAppendStringBuilder2(&stringBuilder, L"大页面, ");
     if (MemoryItem->PageSizeHuge)
-        PhAppendStringBuilder2(&stringBuilder, L"PageSizeHuge, ");
+        PhAppendStringBuilder2(&stringBuilder, L"巨型页面, ");
 
     if (PhEndsWithString2(stringBuilder.String, L", ", FALSE))
         PhRemoveEndStringBuilder(&stringBuilder, 2);

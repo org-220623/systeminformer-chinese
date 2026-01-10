@@ -112,7 +112,7 @@ BOOLEAN SetupShowDirectoryWarningPrompt(
             //    Context->DialogHandle,
             //    TDCBF_YES_BUTTON | TDCBF_NO_BUTTON,
             //    TD_WARNING_ICON,
-            //    L"WARNING",
+            //    L"警告",
             //    L"The installation directory already contains files and data. Please select a different directory"
             //    L" or click Yes to delete the files and data and continue. Are you sure you want to continue?"
             //    );
@@ -139,8 +139,8 @@ VOID ShowErrorPageDialog(
     if (Context->ErrorCode)
         config.pszMainInstruction = PhGetStatusMessage(0, Context->ErrorCode)->Buffer;
     else
-        config.pszMainInstruction = L"Setup failed with an error.";
-    config.pszContent = L"Select Close to exit setup.";
+        config.pszMainInstruction = L"安装程序出现错误。";
+    config.pszContent = L"点击 \"关闭\" 退出安装程序";
     config.cxWidth = 200;
 
     TaskDialogNavigatePage(Context->DialogHandle, &config);
@@ -233,7 +233,7 @@ VOID ShowWelcomePageDialog(
 {
     TASKDIALOG_BUTTON buttonArray[] =
     {
-        { IDCONTINUE, L"Install" }
+        { IDCONTINUE, L"安装" }
     };
     TASKDIALOGCONFIG config;
 
@@ -248,7 +248,7 @@ VOID ShowWelcomePageDialog(
     config.lpCallbackData = (LONG_PTR)Context;
     config.pszWindowTitle = PhApplicationName;
     config.pszMainInstruction = PhApplicationName;
-    config.pszContent = L"A free, powerful, multi-purpose tool that helps you monitor system resources, debug software and detect malware.";
+    config.pszContent = L"一款免费、开源、功能强大、用途广泛的工具，可帮助您监控系统资源、调试软件和检测恶意软件。";
     config.cxWidth = 200;
 
     TaskDialogNavigatePage(Context->DialogHandle, &config);
@@ -287,9 +287,9 @@ VOID ShowCompletedPageDialog(
     config.pfCallback = SetupCompletePageCallbackProc;
     config.lpCallbackData = (LONG_PTR)Context;
     config.pszWindowTitle = PhApplicationName;
-    config.pszMainInstruction = PhaConcatStrings2(PhApplicationName, L" complete.")->Buffer;
-    config.pszContent = L"Select Close to exit setup.";
-    config.pszVerificationText = L"Start program when setup exits";
+    config.pszMainInstruction = PhaConcatStrings2(PhApplicationName, L" 已完成")->Buffer;
+    config.pszContent = L"点击 \"关闭\" 退出安装程序";
+    config.pszVerificationText = L"启动 System Informer";
     config.cxWidth = 200;
 
 #ifdef FORCE_TEST_UPDATE_LOCAL_INSTALL
@@ -316,7 +316,7 @@ HRESULT CALLBACK SetupConfigPageCallbackProc(
             PPH_STRING status;
 
             status = PhFormatString(
-                L"Installation Folder:\r\n\r\n%s",
+                L"安装目录: \r\n\r\n%s",
                 PhGetStringOrEmpty(context->SetupInstallPath)
                 );
             SendMessage(hwndDlg, TDM_UPDATE_ELEMENT_TEXT, TDE_CONTENT, (LPARAM)status->Buffer);
@@ -332,7 +332,7 @@ HRESULT CALLBACK SetupConfigPageCallbackProc(
                 SetupShowBrowseDialog(context);
 
                 status = PhFormatString(
-                    L"Installation Folder:\r\n\r\n%s",
+                    L"安装目录: \r\n\r\n%s",
                     PhGetStringOrEmpty(context->SetupInstallPath)
                     );
                 SendMessage(hwndDlg, TDM_UPDATE_ELEMENT_TEXT, TDE_CONTENT, (LPARAM)status->Buffer);
@@ -375,8 +375,8 @@ VOID ShowConfigPageDialog(
 {
     TASKDIALOG_BUTTON buttonConfig[] =
     {
-        { IDYES, L"Browse" },
-        { IDOK, L"Next" },
+        { IDYES, L"浏览" },
+        { IDOK, L"下一步" },
     };
     TASKDIALOGCONFIG config;
 
@@ -391,8 +391,8 @@ VOID ShowConfigPageDialog(
     config.lpCallbackData = (LONG_PTR)Context;
     config.cxWidth = 200;
     config.pszWindowTitle = PhApplicationName;
-    config.pszMainInstruction = L"Setup Options";
-    config.pszContent = L"Installation Folder:\r\n\r\nSelect \"Browse\" to continue.";
+    config.pszMainInstruction = L"安装选项";
+    config.pszContent = L"安装目录: \r\n\r\n选择 \"浏览\" 以继续。";
 
     TaskDialogNavigatePage(Context->DialogHandle, &config);
 }
@@ -439,8 +439,8 @@ VOID ShowConfigDirectoryNonEmptyDialog(
 {
     TASKDIALOG_BUTTON buttonConfig[] =
     {
-        { IDYES, L"Change directory" },
-        { IDNO, L"Continue" },
+        { IDYES, L"更改目录" },
+        { IDNO, L"继续" },
     };
     TASKDIALOGCONFIG config;
 
@@ -455,9 +455,9 @@ VOID ShowConfigDirectoryNonEmptyDialog(
     config.lpCallbackData = (LONG_PTR)Context;
     config.cxWidth = 200;
     config.pszWindowTitle = PhApplicationName;
-    config.pszMainInstruction = L"WARNING";
-    config.pszContent = L"The selected installation directory already contains files and data. "
-        L"If you continue this directory and files will be deleted.\r\n\r\nDo you want to change the directory?";
+    config.pszMainInstruction = L"警告";
+    config.pszContent = L"选定的安装目录已包含文件和数据。"
+        L"如果继续操作，此目录及其中的文件将被删除。\r\n\r\n您要更改目录吗?";
 
     TaskDialogNavigatePage(Context->DialogHandle, &config);
 }
@@ -561,7 +561,7 @@ VOID ShowInstallPageDialog(
     config.lpCallbackData = (LONG_PTR)Context;
     config.cxWidth = 200;
     config.pszWindowTitle = PhApplicationName;
-    config.pszMainInstruction = L"Preparing to install...";
+    config.pszMainInstruction = L"准备安装...";
     config.pszContent = L" ";
 
     TaskDialogNavigatePage(Context->DialogHandle, &config);

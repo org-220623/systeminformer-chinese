@@ -251,11 +251,11 @@ VOID ShowUninstallCompletedPageDialog(
 
     config.cxWidth = 200;
     config.pszWindowTitle = PhApplicationName;
-    config.pszMainInstruction = L"System Informer has been uninstalled.";
+    config.pszMainInstruction = L"已卸载 System Informer。";
     if (Context->NeedsReboot)
-        config.pszContent = L"A reboot is required to complete the uninstall.";
+        config.pszContent = L"卸载完成后需重启计算机。";
     else
-        config.pszContent = L"Click close to exit setup.";
+        config.pszContent = L"单击 \"关闭\" 退出卸载程序。";
 
     TaskDialogNavigatePage(Context->DialogHandle, &config);
 }
@@ -276,7 +276,7 @@ VOID ShowUninstallingPageDialog(
 
     config.cxWidth = 200;
     config.pszWindowTitle = PhApplicationName;
-    config.pszMainInstruction = L"Uninstalling System Informer...";
+    config.pszMainInstruction = L"正在卸载 System Informer...";
 
     TaskDialogNavigatePage(Context->DialogHandle, &config);
 }
@@ -300,8 +300,8 @@ VOID ShowUninstallErrorPageDialog(
     if (Context->ErrorCode)
         config.pszMainInstruction = PhGetStatusMessage(0, Context->ErrorCode)->Buffer;
     else
-        config.pszMainInstruction = L"Uninstall failed with an error.";
-    config.pszContent = L"Click retry to try again or close to exit setup.";
+        config.pszMainInstruction = L"卸载过程中出现错误。";
+    config.pszContent = L"单击 \"重试\" 重新尝试卸载，或单击 \"关闭\" 退出卸载程序。";
 
     TaskDialogNavigatePage(Context->DialogHandle, &config);
 }
@@ -312,7 +312,7 @@ VOID ShowUninstallPageDialog(
 {
     TASKDIALOG_BUTTON buttonArray[] =
     {
-        { IDYES, L"Uninstall" }
+        { IDYES, L"卸载" }
     };
     TASKDIALOGCONFIG config;
 
@@ -328,9 +328,9 @@ VOID ShowUninstallPageDialog(
     config.cxWidth = 200;
     config.pszWindowTitle = PhApplicationName;
     config.pszMainInstruction = PhApplicationName;
-    config.pszContent = L"Are you sure you want to uninstall System Informer?";
+    config.pszContent = L"您确定要卸载 System Informer 吗?";
     if (PhGetOwnTokenAttributes().Elevated)
-        config.pszVerificationText = L"Remove application settings";
+        config.pszVerificationText = L"删除应用程序配置";
     config.dwCommonButtons = TDCBF_CANCEL_BUTTON;
     config.nDefaultButton = IDCANCEL;
 

@@ -195,7 +195,7 @@ INT_PTR CALLBACK PhpMemoryEditorDlgProc(
 
             if (context->RegionSize > 1024 * 1024 * 1024) // 1 GB
             {
-                PhShowStatus(context->OwnerHandle, L"Unable to edit the memory region.", 0, MEM_E_INVALID_SIZE);
+                PhShowStatus(context->OwnerHandle, L"无法编辑内存区域。", 0, MEM_E_INVALID_SIZE);
                 return TRUE;
             }
 
@@ -203,7 +203,7 @@ INT_PTR CALLBACK PhpMemoryEditorDlgProc(
 
             if (!context->Buffer)
             {
-                PhShowStatus(context->OwnerHandle, L"Unable to edit the memory region.", 0, ERROR_OUTOFMEMORY);
+                PhShowStatus(context->OwnerHandle, L"无法编辑内存区域。", 0, ERROR_OUTOFMEMORY);
                 return TRUE;
             }
 
@@ -228,13 +228,13 @@ INT_PTR CALLBACK PhpMemoryEditorDlgProc(
 
                     if (!NT_SUCCESS(status))
                     {
-                        PhShowStatus(context->OwnerHandle, L"Unable to read memory", status, 0);
+                        PhShowStatus(context->OwnerHandle, L"无法读取内存", status, 0);
                         return TRUE;
                     }
                 }
                 else
                 {
-                    PhShowStatus(context->OwnerHandle, L"Unable to open the process", status, 0);
+                    PhShowStatus(context->OwnerHandle, L"无法打开进程", status, 0);
                     return TRUE;
                 }
             }
@@ -307,7 +307,7 @@ INT_PTR CALLBACK PhpMemoryEditorDlgProc(
                 ULONG bytesPerRow;
 
                 for (i = 0; i < sizeof(bytesPerRowStrings) / sizeof(PWSTR); i++)
-                    bytesPerRowStrings[i] = PhaFormatString(L"%u bytes per row", 1 << (2 + i))->Buffer;
+                    bytesPerRowStrings[i] = PhaFormatString(L"每行 %u 字节", 1 << (2 + i))->Buffer;
 
                 PhAddComboBoxStrings(GetDlgItem(hwndDlg, IDC_BYTESPERROW),
                     bytesPerRowStrings, sizeof(bytesPerRowStrings) / sizeof(PWSTR));
@@ -318,7 +318,7 @@ INT_PTR CALLBACK PhpMemoryEditorDlgProc(
                 {
                     HexEdit_SetBytesPerRow(context->HexEditHandle, bytesPerRow);
                     PhSelectComboBoxString(GetDlgItem(hwndDlg, IDC_BYTESPERROW),
-                        PhaFormatString(L"%u bytes per row", bytesPerRow)->Buffer, FALSE);
+                        PhaFormatString(L"每行 %u 字节", bytesPerRow)->Buffer, FALSE);
                 }
             }
 
@@ -366,8 +366,8 @@ INT_PTR CALLBACK PhpMemoryEditorDlgProc(
                 {
                     static PH_FILETYPE_FILTER filters[] =
                     {
-                        { L"Binary files (*.bin)", L"*.bin" },
-                        { L"All files (*.*)", L"*.*" }
+                        { L"二进制文件 (*.bin)", L"*.bin" },
+                        { L"所有文件 (*.*)", L"*.*" }
                     };
                     PVOID fileDialog;
                     PPH_PROCESS_ITEM processItem;
@@ -410,7 +410,7 @@ INT_PTR CALLBACK PhpMemoryEditorDlgProc(
                         }
 
                         if (!NT_SUCCESS(status))
-                            PhShowStatus(hwndDlg, L"Unable to create the file", status, 0);
+                            PhShowStatus(hwndDlg, L"无法创建文件", status, 0);
                     }
 
                     PhFreeFileDialog(fileDialog);
@@ -422,8 +422,8 @@ INT_PTR CALLBACK PhpMemoryEditorDlgProc(
 
                     while (PhaChoiceDialog(
                         hwndDlg,
-                        L"Go to Offset",
-                        L"Enter an offset:",
+                        L"转到",
+                        L"输入偏移量:",
                         NULL,
                         0,
                         NULL,
@@ -442,7 +442,7 @@ INT_PTR CALLBACK PhpMemoryEditorDlgProc(
                         {
                             if (offset >= context->RegionSize)
                             {
-                                PhShowStatus(hwndDlg, L"Unable to edit the memory region.", 0, MEM_E_INVALID_SIZE);
+                                PhShowStatus(hwndDlg, L"无法编辑内存区域。", 0, MEM_E_INVALID_SIZE);
                                 continue;
                             }
 
@@ -459,9 +459,9 @@ INT_PTR CALLBACK PhpMemoryEditorDlgProc(
 
                     if (PhGetIntegerSetting(L"EnableWarnings") && !PhShowConfirmMessage(
                         hwndDlg,
-                        L"write",
-                        L"process memory",
-                        L"Some programs may restrict access or ban your account when editing the memory of the process.",
+                        L"写入",
+                        L"进程内存",
+                        L"某些程序在编辑进程内存时可能会限制访问或封禁您的帐户。",
                         FALSE
                         ))
                     {
@@ -491,12 +491,12 @@ INT_PTR CALLBACK PhpMemoryEditorDlgProc(
 
                             if (!NT_SUCCESS(status))
                             {
-                                PhShowStatus(hwndDlg, L"Unable to write memory", status, 0);
+                                PhShowStatus(hwndDlg, L"无法写入内存", status, 0);
                             }
                         }
                         else
                         {
-                            PhShowStatus(hwndDlg, L"Unable to open the process", status, 0);
+                            PhShowStatus(hwndDlg, L"无法打开进程", status, 0);
                         }
                     }
                 }
@@ -526,12 +526,12 @@ INT_PTR CALLBACK PhpMemoryEditorDlgProc(
 
                         if (!NT_SUCCESS(status))
                         {
-                            PhShowStatus(hwndDlg, L"Unable to read memory", status, 0);
+                            PhShowStatus(hwndDlg, L"无法读取内存", status, 0);
                         }
                     }
                     else
                     {
-                        PhShowStatus(hwndDlg, L"Unable to open the process", status, 0);
+                        PhShowStatus(hwndDlg, L"无法打开进程", status, 0);
                     }
 
                     InvalidateRect(context->HexEditHandle, NULL, TRUE);
