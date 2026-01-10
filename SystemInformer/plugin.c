@@ -348,7 +348,7 @@ VOID PhpShowPluginErrorMessage(
             &stringBuilder,
             L"%s: %s\n",
             baseName->Buffer,
-            PhGetStringOrDefault(loadError->ErrorMessage, L"An unknown error occurred.")
+            PhGetStringOrDefault(loadError->ErrorMessage, L"出现未知错误。")
             );
 
         PhDereferenceObject(baseName);
@@ -363,7 +363,7 @@ VOID PhpShowPluginErrorMessage(
     config.dwCommonButtons = TDCBF_OK_BUTTON;
     config.pszWindowTitle = PhApplicationName;
     config.pszMainIcon = TD_INFORMATION_ICON;
-    config.pszMainInstruction = L"Unable to load the following plugin(s)";
+    config.pszMainInstruction = L"无法加载以下插件";
     config.pszContent = PhGetString(PhFinalStringBuilderString(&stringBuilder));
     config.nDefaultButton = IDOK;
 
@@ -683,7 +683,7 @@ PPH_PLUGIN PhRegisterPlugin(
     PPH_AVL_LINKS existingLinks;
     ULONG i;
 
-    PhTraceInfo("%ls plugin registering", Name);
+    PhTraceInfo("已注册 %ls 个插件", Name);
 
     PhInitializeStringRefLongHint(&pluginName, Name);
 
