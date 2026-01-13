@@ -26,7 +26,7 @@
 PPH_OBJECT_TYPE PhpProcessPropContextType = NULL;
 PPH_OBJECT_TYPE PhpProcessPropPageContextType = NULL;
 PPH_OBJECT_TYPE PhpProcessPropPageWaitContextType = NULL;
-PH_STRINGREF PhProcessPropPageLoadingText = PH_STRINGREF_INIT(L"Loading...");
+PH_STRINGREF PhProcessPropPageLoadingText = PH_STRINGREF_INIT(L"加载中...");
 static RECT MinimumSize = { -1, -1, -1, -1 };
 SLIST_HEADER WaitContextQueryListHead;
 
@@ -380,8 +380,8 @@ BOOLEAN PhpInitializePropSheetLayoutStage1(
 
         // Hide the OK button.
         ShowWindow(GetDlgItem(hwnd, IDOK), SW_HIDE);
-        // Set the Cancel button's text to "Close".
-        PhSetDialogItemText(hwnd, IDCANCEL, L"Close");
+        // Set the Cancel button's text to "关闭".
+        PhSetDialogItemText(hwnd, IDCANCEL, L"关闭");
 
         Context->TabPageItem = tabPageItem;
         Context->LayoutInitialized = TRUE;
@@ -631,7 +631,7 @@ VOID PhpFlushProcessPropSheetWaitContextData(
             {
                 if (errorMessage = PhGetStatusMessage(basicInfo.ExitStatus, 0))
                 {
-                    PhInitFormatS(&format[3], L") exited with ");
+                    PhInitFormatS(&format[3], L") 已退出，退出信息: ");
                     PhInitFormatSR(&format[4], errorMessage->sr);
 
                     statusMessage = PhFormat(format, RTL_NUMBER_OF(format), 0);
@@ -641,7 +641,7 @@ VOID PhpFlushProcessPropSheetWaitContextData(
 
             if (PhIsNullOrEmptyString(statusMessage))
             {
-                PhInitFormatS(&format[3], L") exited with 0x");
+                PhInitFormatS(&format[3], L") 已退出，退出代码: 0x");
                 PhInitFormatX(&format[4], basicInfo.ExitStatus);
                 //format[4].Type |= FormatPadZeros; format[4].Width = 8;
                 statusMessage = PhFormat(format, RTL_NUMBER_OF(format), 0);
@@ -981,7 +981,7 @@ NTSTATUS PhpProcessPropertiesThreadStart(
     // Create the property sheet
 
     if (PropContext->SelectThreadId)
-        PhSetStringSetting(L"ProcPropPage", L"Threads");
+        PhSetStringSetting(L"ProcPropPage", L"线程");
 
     startPage = PhGetStringSetting(L"ProcPropPage");
     PropContext->PropSheetHeader.dwFlags |= PSH_USEPSTARTPAGE;
