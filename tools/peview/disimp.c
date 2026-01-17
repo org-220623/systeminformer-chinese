@@ -956,19 +956,19 @@ VOID PvScanImageForPage(
 
                             if (value.Kind == PvValConst && value.U <= 0xFFFF)
                             {
-                                _snwprintf_s(argument, RTL_NUMBER_OF(argument), _TRUNCATE, L"<ordinal:%llu>", value.U);
+                                _snwprintf_s(argument, RTL_NUMBER_OF(argument), _TRUNCATE, L"<序数:%llu>", value.U);
                             }
                             else if ((value.Kind == PvValAddr || value.Kind == PvValConst) && value.U)
                             {
                                 // value.U points to an ANSI_STRING structure (not directly to a char buffer)
                                 if (!PvReadAnsiStringStructAtVa(value.U, argument, RTL_NUMBER_OF(argument)))
                                 {
-                                    wcscpy_s(argument, RTL_NUMBER_OF(argument), L"<unknown>");
+                                    wcscpy_s(argument, RTL_NUMBER_OF(argument), L"<未知>");
                                 }
                             }
                             else
                             {
-                                wcscpy_s(argument, RTL_NUMBER_OF(argument), L"<unknown>");
+                                wcscpy_s(argument, RTL_NUMBER_OF(argument), L"<未知>");
                             }
                         }
                         else
@@ -983,18 +983,18 @@ VOID PvScanImageForPage(
 
                             if (value.Kind == PvValConst && value.U <= 0xFFFF)
                             {
-                                _snwprintf_s(argument, RTL_NUMBER_OF(argument), _TRUNCATE, L"<ordinal:%llu>", value.U);
+                                _snwprintf_s(argument, RTL_NUMBER_OF(argument), _TRUNCATE, L"<序数:%llu>", value.U);
                             }
                             else if ((value.Kind == PvValAddr || value.Kind == PvValConst) && value.U)
                             {
                                 PvReadStringAtVa(value.U, argument, RTL_NUMBER_OF(argument));
 
                                 if (argument[0] == UNICODE_NULL)
-                                    wcscpy_s(argument, RTL_NUMBER_OF(argument), L"<unknown>");
+                                    wcscpy_s(argument, RTL_NUMBER_OF(argument), L"<未知>");
                             }
                             else
                             {
-                                wcscpy_s(argument, RTL_NUMBER_OF(argument), L"<unknown>");
+                                wcscpy_s(argument, RTL_NUMBER_OF(argument), L"<未知>");
                             }
                         }
                     }
@@ -1031,12 +1031,12 @@ VOID PvScanImageForPage(
                                 // value.U points to a UNICODE_STRING structure (not directly to wchar buffer)
                                 if (!PvReadUnicodeStringStructAtVa(value.U, argument, RTL_NUMBER_OF(argument)))
                                 {
-                                    wcscpy_s(argument, RTL_NUMBER_OF(argument), L"<unknown>");
+                                    wcscpy_s(argument, RTL_NUMBER_OF(argument), L"<未知>");
                                 }
                             }
                             else
                             {
-                                wcscpy_s(argument, RTL_NUMBER_OF(argument), L"<unknown>");
+                                wcscpy_s(argument, RTL_NUMBER_OF(argument), L"<未知>");
                             }
                         }
                         else
@@ -1054,11 +1054,11 @@ VOID PvScanImageForPage(
                                 PvReadStringAtVa(value.U, argument, RTL_NUMBER_OF(argument));
 
                                 if (argument[0] == UNICODE_NULL)
-                                    wcscpy_s(argument, RTL_NUMBER_OF(argument), L"<unknown>");
+                                    wcscpy_s(argument, RTL_NUMBER_OF(argument), L"<未知>");
                             }
                             else
                             {
-                                wcscpy_s(argument, RTL_NUMBER_OF(argument), L"<unknown>");
+                                wcscpy_s(argument, RTL_NUMBER_OF(argument), L"<未知>");
                             }
                         }
                     }
@@ -1120,10 +1120,10 @@ VOID PvInitCommonListView(
     PhSetExtendedListView(Context->ListViewHandle);
     PvConfigTreeBorders(Context->ListViewHandle);
 
-    PhAddListViewColumn(Context->ListViewHandle, 0, 0, 0, LVCFMT_LEFT, 120, L"Call VA");
-    PhAddListViewColumn(Context->ListViewHandle, 1, 1, 1, LVCFMT_LEFT, 240, L"Target");
-    PhAddListViewColumn(Context->ListViewHandle, 2, 2, 2, LVCFMT_LEFT, 280, L"String/Ordinal");
-    PhAddListViewColumn(Context->ListViewHandle, 3, 3, 3, LVCFMT_LEFT, 120, L"IAT Slot");
+    PhAddListViewColumn(Context->ListViewHandle, 0, 0, 0, LVCFMT_LEFT, 120, L"调用 VA");
+    PhAddListViewColumn(Context->ListViewHandle, 1, 1, 1, LVCFMT_LEFT, 240, L"目标");
+    PhAddListViewColumn(Context->ListViewHandle, 2, 2, 2, LVCFMT_LEFT, 280, L"字符串/序数");
+    PhAddListViewColumn(Context->ListViewHandle, 3, 3, 3, LVCFMT_LEFT, 120, L"IAT 槽");
 
     PhInitializeLayoutManager(&Context->LayoutManager, WindowHandle);
     PhAddLayoutItem(&Context->LayoutManager, Context->ListViewHandle, NULL, PH_ANCHOR_ALL);
