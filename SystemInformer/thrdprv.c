@@ -606,20 +606,20 @@ PPH_STRING PhGetBasePriorityIncrementString(
     {
     case THREAD_BASE_PRIORITY_LOWRT + 1:
     case THREAD_BASE_PRIORITY_LOWRT:
-        return PhCreateString(L"Time critical");
+        return PhCreateString(L"时间关键");
     case THREAD_PRIORITY_HIGHEST:
-        return PhCreateString(L"Highest");
+        return PhCreateString(L"最高");
     case THREAD_PRIORITY_ABOVE_NORMAL:
-        return PhCreateString(L"Above normal");
+        return PhCreateString(L"高于正常");
     case THREAD_PRIORITY_NORMAL:
-        return PhCreateString(L"Normal");
+        return PhCreateString(L"正常");
     case THREAD_PRIORITY_BELOW_NORMAL:
-        return PhCreateString(L"Below normal");
+        return PhCreateString(L"低于正常");
     case THREAD_PRIORITY_LOWEST:
-        return PhCreateString(L"Lowest");
+        return PhCreateString(L"最低");
     case THREAD_BASE_PRIORITY_IDLE:
     case THREAD_BASE_PRIORITY_IDLE - 1:
-        return PhCreateString(L"Idle");
+        return PhCreateString(L"空闲");
     case THREAD_PRIORITY_ERROR_RETURN:
         return NULL;
     default:
