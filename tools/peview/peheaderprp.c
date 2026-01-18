@@ -718,15 +718,15 @@ VOID PvPeUpdateImageHeaderProperties(
     ListView_DeleteAllItems(Context->ListViewHandle);
 
     // DOS Headers
-    PhAddListViewGroupItem(Context->ListViewHandle, PVP_IMAGE_HEADER_CATEGORY_DOSHDR, PVP_IMAGE_HEADER_INDEX_DOS_MAGIC, L"Magic number", NULL);
-    PhAddListViewGroupItem(Context->ListViewHandle, PVP_IMAGE_HEADER_CATEGORY_DOSHDR, PVP_IMAGE_HEADER_INDEX_DOS_BYTES, L"Bytes on last page of file", NULL);
-    PhAddListViewGroupItem(Context->ListViewHandle, PVP_IMAGE_HEADER_CATEGORY_DOSHDR, PVP_IMAGE_HEADER_INDEX_DOS_PAGES, L"Pages in file", NULL);
-    PhAddListViewGroupItem(Context->ListViewHandle, PVP_IMAGE_HEADER_CATEGORY_DOSHDR, PVP_IMAGE_HEADER_INDEX_DOS_RELOCATIONS, L"Relocations", NULL);
-    PhAddListViewGroupItem(Context->ListViewHandle, PVP_IMAGE_HEADER_CATEGORY_DOSHDR, PVP_IMAGE_HEADER_INDEX_DOS_PARAGRAPH, L"Size of header in paragraphs", NULL);
-    PhAddListViewGroupItem(Context->ListViewHandle, PVP_IMAGE_HEADER_CATEGORY_DOSHDR, PVP_IMAGE_HEADER_INDEX_DOS_MINPARA, L"Minimum extra paragraphs needed", NULL);
-    PhAddListViewGroupItem(Context->ListViewHandle, PVP_IMAGE_HEADER_CATEGORY_DOSHDR, PVP_IMAGE_HEADER_INDEX_DOS_MAXPARA, L"Maximum extra paragraphs needed", NULL);
-    PhAddListViewGroupItem(Context->ListViewHandle, PVP_IMAGE_HEADER_CATEGORY_DOSHDR, PVP_IMAGE_HEADER_INDEX_DOS_INITRELSS, L"Initial (relative) SS value", NULL);
-    PhAddListViewGroupItem(Context->ListViewHandle, PVP_IMAGE_HEADER_CATEGORY_DOSHDR, PVP_IMAGE_HEADER_INDEX_DOS_INITRELSP, L"Initial SP value", NULL);
+    PhAddListViewGroupItem(Context->ListViewHandle, PVP_IMAGE_HEADER_CATEGORY_DOSHDR, PVP_IMAGE_HEADER_INDEX_DOS_MAGIC, L"魔数", NULL);
+    PhAddListViewGroupItem(Context->ListViewHandle, PVP_IMAGE_HEADER_CATEGORY_DOSHDR, PVP_IMAGE_HEADER_INDEX_DOS_BYTES, L"文件最后页面字节数", NULL);
+    PhAddListViewGroupItem(Context->ListViewHandle, PVP_IMAGE_HEADER_CATEGORY_DOSHDR, PVP_IMAGE_HEADER_INDEX_DOS_PAGES, L"文件页面数量", NULL);
+    PhAddListViewGroupItem(Context->ListViewHandle, PVP_IMAGE_HEADER_CATEGORY_DOSHDR, PVP_IMAGE_HEADER_INDEX_DOS_RELOCATIONS, L"重定位", NULL);
+    PhAddListViewGroupItem(Context->ListViewHandle, PVP_IMAGE_HEADER_CATEGORY_DOSHDR, PVP_IMAGE_HEADER_INDEX_DOS_PARAGRAPH, L"以段为单位的头部大小", NULL);
+    PhAddListViewGroupItem(Context->ListViewHandle, PVP_IMAGE_HEADER_CATEGORY_DOSHDR, PVP_IMAGE_HEADER_INDEX_DOS_MINPARA, L"所需的最小额外段落数", NULL);
+    PhAddListViewGroupItem(Context->ListViewHandle, PVP_IMAGE_HEADER_CATEGORY_DOSHDR, PVP_IMAGE_HEADER_INDEX_DOS_MAXPARA, L"所需的最大额外段落数", NULL);
+    PhAddListViewGroupItem(Context->ListViewHandle, PVP_IMAGE_HEADER_CATEGORY_DOSHDR, PVP_IMAGE_HEADER_INDEX_DOS_INITRELSS, L"初始（相对）SS 值", NULL);
+    PhAddListViewGroupItem(Context->ListViewHandle, PVP_IMAGE_HEADER_CATEGORY_DOSHDR, PVP_IMAGE_HEADER_INDEX_DOS_INITRELSP, L"初始 SP 值", NULL);
     PhAddListViewGroupItem(Context->ListViewHandle, PVP_IMAGE_HEADER_CATEGORY_DOSHDR, PVP_IMAGE_HEADER_INDEX_DOS_CHECKSUM, L"Checksum", NULL);
     PhAddListViewGroupItem(Context->ListViewHandle, PVP_IMAGE_HEADER_CATEGORY_DOSHDR, PVP_IMAGE_HEADER_INDEX_DOS_INITIP, L"Initial IP value", NULL);
     PhAddListViewGroupItem(Context->ListViewHandle, PVP_IMAGE_HEADER_CATEGORY_DOSHDR, PVP_IMAGE_HEADER_INDEX_DOS_INITCS, L"Initial (relative) CS value", NULL);
